@@ -1,0 +1,30 @@
+﻿@using EntityLayer.Concrete
+@model List<Service>
+
+
+
+    <div class="container">
+
+        <div class="section-title">
+            <h2>Hizmetlerim</h2>
+            <p>HİZMETLERİM</p>
+        </div>
+
+        <div class="row">
+
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4">
+                    <div class="icon-box">
+                        <div class="icon"><i class="@item.ServiceIcon"></i></div>
+                        <h4><a href="">@item.ServiceHeader</a></h4>
+                        <p>
+                            @item.ServiceContent
+                        </p>
+                    </div>
+                </div>
+            }
+
+        </div>
+
+    </div>

@@ -1,0 +1,128 @@
+﻿@model Core5BlogApp.Areas.Writer.Models.UserLoginViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>.NET CORE 5 | Giriş Yap</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" type="image/png" href="~/images/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/images/icons/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/images/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="~/images/icons/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="~/images/icons/android-chrome-512x512.png">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/Admin/plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="~/Admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/Admin/dist/css/adminlte.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="/ShowCase/ShowCase/Index/"><b>.NET CORE 5 </b> GİRİŞ YAP</a>
+        </div>
+        <!-- /.login-logo -->
+        <div class="card">
+            <div class="card-body login-card-body">
+                <p class="login-box-msg">Giriş yapmak için aşağıdaki formu doldurun.</p>
+
+                <form method="post">
+                    <div class="input-group">
+                        <input asp-for="UserName" type="text" class="form-control" placeholder="Kullanıcı Adınız">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-user"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-2">
+                        <span asp-validation-for="UserName" class="text-danger fw-bold"></span>
+                    </div>
+                    <div class="input-group">
+                        <input asp-for="Password" type="password" class="form-control" placeholder="Şifreniz">
+                        <a class="input-group-append" onclick="passwordFunction()">
+                            <div class="input-group-text">
+                                <span id="eye" class="fas fa-eye-slash"></span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="input-group mb-2">
+                        <span asp-validation-for="Password" class="text-danger fw-bold"></span>
+                    </div>
+                    <div class="text-danger" asp-validation-summary="ModelOnly">
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="icheck-primary">
+                                <input type="checkbox" id="Remember" value="true" name="Remember" asp-for="Remember">
+                                <label for="remember">
+                                    Beni Hatırla
+                                </label>
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-4">
+                            <button type="submit" class="btn btn-dark btn-block">Giriş Yap</button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </form>
+
+                <div class="social-auth-links text-center">
+                    <p>- VEYA -</p>
+                    <a href="#" class="btn btn-block btn-primary">
+                        <i class="fab fa-facebook mr-2"></i>
+                        Facebook'u kullanarak giriş yap
+                    </a>
+                    <a href="#" class="btn btn-block btn-danger">
+                        <i class="fab fa-google-plus mr-2"></i>
+                        Google+'yı kullanarak giriş yap
+                    </a>
+                </div>
+                <!-- /.social-auth-links -->
+
+                <p class="mb-1">
+                    <a href="forgot-password.html">Şifremi Unuttum</a>
+                </p>
+                <p class="mb-0">
+                    <a href="/Writer/Register/Index/" class="text-center">Yeni Hesap Oluştur</a>
+                </p>
+            </div>
+            <!-- /.login-card-body -->
+        </div>
+    </div>
+    <!-- /.login-box -->
+    <!-- jQuery -->
+    <script src="~/Admin/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="~/Admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/Admin/dist/js/adminlte.min.js"></script>
+    <script>
+        function passwordFunction() {
+            var x = document.getElementById("Password");
+            if (x.type === "password") {
+                x.type = "text";
+                $('#eye').removeClass("fas fa-eye-slash");
+                $('#eye').addClass("fas fa-eye");
+            } else {
+                $('#eye').removeClass("fas fa-eye");
+                $('#eye').addClass("fas fa-eye-slash");
+                x.type = "password";
+            }
+        }
+    </script>
+</body>
+</html>

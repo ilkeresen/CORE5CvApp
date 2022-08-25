@@ -1,0 +1,83 @@
+﻿@model Core5BlogApp.Areas.Writer.Models.UserEditViewModel
+
+<form class="form-horizontal" role="form" id="SettingsUpdateForm" enctype="multipart/form-data">
+    <div class="form-group row">
+        <label for="inputName" class="col-sm-2 col-form-label">Adınız</label>
+        <div class="col-sm-10">
+            @Html.TextBoxFor(x => x.Name, new { @class = "form-control", @type = "text", @id = "Name", @name = "Name" })
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputName" class="col-sm-2 col-form-label">Soyadınız</label>
+        <div class="col-sm-10">
+            @Html.TextBoxFor(x => x.Surname, new { @class = "form-control", @type = "text", @id = "Surname", @name = "Surname" })
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputName" class="col-sm-2 col-form-label">Telefonunuz</label>
+        <div class="col-sm-10">
+            @Html.TextBoxFor(x => x.PhoneNumber, new { @class = "form-control", @type = "text", @id = "PhoneNumber", @name = "PhoneNumber" })
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputName" class="col-sm-2 col-form-label">Mesleğiniz</label>
+        <div class="col-sm-10">
+            @Html.TextBoxFor(x => x.Job, new { @class = "form-control", @type = "text", @id = "Job", @name = "Job" })
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputName" class="col-sm-2 col-form-label">Referans Yazınız</label>
+        <div class="col-sm-10">
+            @Html.TextAreaFor(x => x.Content, new { @class = "form-control", @type = "text", @id = "Content", @name = "Content" })
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="Image" class="col-sm-2 col-form-label">Resim</label>
+        <div class="col-sm-10">
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" name="Image" id="Image" accept="image/png, image/jpg, image/jpeg">
+                <label class="custom-file-label" data-browse="Resim Seç">Resminiz</label>
+            </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputName" class="col-sm-2 col-form-label">Şifreniz</label>
+        <div class="col-sm-10">
+            <div class="input-group">
+                <input type="password" name="Password" id="Password" class="form-control" placeholder="Şifreniz">
+                <a class="input-group-append" onclick="passwordFunction()">
+                    <div class="input-group-text">
+                        <span id="eye" class="fas fa-eye-slash"></span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputName" class="col-sm-2 col-form-label">Şifre Tekrar</label>
+        <div class="col-sm-10">
+            <div class="input-group">
+                <input type="password" name="ComfirmPassword" id="ConfirmPassword" class="form-control" placeholder="Şifre Tekrarı">
+                <a class="input-group-append" onclick="comfirmpasswordFunction()">
+                    <div class="input-group-text">
+                        <span id="ceye" class="fas fa-eye-slash"></span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="offset-sm-2 col-sm-10">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox"> Bilgilerimi güncellemeyi <a href="">kabul ediyorum.</a>
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="offset-sm-2 col-sm-10">
+            <button type="submit" class="btn btn-dark" id="SettingsUpdate">Güncelle</button>
+        </div>
+    </div>
+</form>

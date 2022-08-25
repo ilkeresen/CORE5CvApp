@@ -1,0 +1,200 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Writer/Views/Shared/_WriterLayout.cshtml";
+}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+                <!-- Profile row -->
+                @await Html.PartialAsync("/Areas/Writer/Views/Profile/Profile.cshtml")
+                <!-- /.Profile row -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-header p-2">
+                        <ul class="nav nav-pills">
+                            <li class="nav-item"><a class="nav-link active" href="#Message" data-toggle="tab">Gelen Mesajlar</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#Announcement" data-toggle="tab">Duyurular</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#Settings" data-toggle="tab">Ayarlar</a></li>
+                        </ul>
+                    </div><!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="active tab-pane" id="Message">
+                                <!-- WriterProfileMessageList row -->
+                                @await Component.InvokeAsync("WriterProfileMessageList")
+                                <!-- /.WriterProfileMessageList row -->
+                            </div>
+                            <!-- /.tab-pane -->
+                            <div class="tab-pane" id="Announcement">
+                                <!-- DashboardUserMessageList row -->
+                                @await Component.InvokeAsync("WriterProfileAnnouncementList")
+                                <!-- /.DashboardUserMessageList row -->
+                            </div>
+                            <!-- /.tab-pane -->
+
+                            <div class="tab-pane" id="Settings">
+                                <!-- Settings row -->
+                                @await Html.PartialAsync("/Areas/Writer/Views/Profile/Settings.cshtml")
+                                <!-- /.Settings row -->
+                            </div>
+                            <!-- /.tab-pane -->
+                        </div>
+                        <!-- /.tab-content -->
+                    </div><!-- /.card-body -->
+                </div>
+                <!-- /.nav-tabs-custom -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
+
+@section Scripts
+{
+    <script>
+
+        $(function () {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+            //PhoneNumber InputMask
+            $('#PhoneNumber').inputmask('0(999)999-9999', { 'placeholder': '0(___)___-____' })
+            bsCustomFileInput.init();
+            //WriterUserEdit UPDATE
+            $("#SettingsUpdate").click(function () {
+                $.validator.setDefaults({
+                    submitHandler: function () {
+                        var data = new FormData();
+                        var form_data = $("#SettingsUpdateForm").serializeArray();
+                        $.each(form_data, function (key, input) {
+                            data.append(input.name, input.value);
+                        });
+                        data.append("Image", $("#Image")[0].files[0]);
+                        $.ajax({
+                            type: "POST",
+                            url: "/Writer/Profile/SettingsUpdate",
+                            data: data,
+                            processData: false,
+                            contentType: false,
+                            dataType: "json",
+                            success: function () {
+                                toastr.success('Güncelleme İşlemi Başarılı.')
+                                setInterval(function () {
+                                    location.reload();
+                                }, 1500);
+                            }
+                        });
+                    }
+                });
+                $('#SettingsUpdateForm').validate({
+                    rules: {
+                        Name: {
+                            required: true,
+                            normalizer: function (value) {
+                                return $.trim(value);
+                            }
+                        },
+                        Surname: {
+                            required: true,
+                            normalizer: function (value) {
+                                return $.trim(value);
+                            }
+                        },
+                        PhoneNumber: {
+                            required: true,
+                            normalizer: function (value) {
+                                return $.trim(value);
+                            }
+                        },
+                        Image: {
+                            required: true,
+                            extension: "png|jpg|jpeg",
+                        },
+                        Password: {
+                            required: true,
+                            normalizer: function (value) {
+                                return $.trim(value);
+                            }
+                        },
+                        ComfirmPassword: {
+                            required: true,
+                            normalizer: function (value) {
+                                return $.trim(value);
+                            },
+                            equalTo: "#Password"
+                        },
+                    },
+                    messages: {
+                        Name: {
+                            required: "Lütfen boş bırakmayınız."
+                        },
+                        Surname: {
+                            required: "Lütfen boş bırakmayınız."
+                        },
+                        PhoneNumber: {
+                            required: "Lütfen boş bırakmayınız."
+                        },
+                        Image: {
+                            required: "Lütfen boş bırakmayınız.",
+                            accept: "Lütfen .png .jpg .jpeg formatında dosya seçiniz."
+                        },
+                        Password: {
+                            required: "Lütfen boş bırakmayınız."
+                        },
+                        ComfirmPassword: {
+                            required: "Lütfen boş bırakmayınız.",
+                            equalTo: "Şifreler eşleşmiyor tekrar deneyiniz."
+                        },
+                    },
+                    errorElement: 'span',
+                    errorPlacement: function (error, element) {
+                        error.addClass('invalid-feedback offset-sm-2 col-sm-10');
+                        element.closest('.form-group').append(error);
+                    },
+                    highlight: function (element, errorClass, validClass) {
+                        $(element).addClass('is-invalid');
+                    },
+                    unhighlight: function (element, errorClass, validClass) {
+                        $(element).removeClass('is-invalid');
+                    }
+                });
+            });
+
+        });
+
+
+        function passwordFunction() {
+            var x = document.getElementById("Password");
+            if (x.type === "password") {
+                x.type = "text";
+                $('#eye').removeClass("fas fa-eye-slash");
+                $('#eye').addClass("fas fa-eye");
+            } else {
+                $('#eye').removeClass("fas fa-eye");
+                $('#eye').addClass("fas fa-eye-slash");
+                x.type = "password";
+            }
+        }
+        function comfirmpasswordFunction() {
+            var y = document.getElementById("ConfirmPassword");
+            if (y.type === "password") {
+                y.type = "text";
+                $('#ceye').removeClass("fas fa-eye-slash");
+                $('#ceye').addClass("fas fa-eye");
+            } else {
+                $('#ceye').removeClass("fas fa-eye");
+                $('#ceye').addClass("fas fa-eye-slash");
+                y.type = "password";
+            }
+        }
+    </script>
+}

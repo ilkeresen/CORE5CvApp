@@ -1,0 +1,38 @@
+﻿@using EntityLayer.Concrete
+@model List<WriterUser>
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fas fa-users mr-1"></i>
+                Son Katılan Üyeler
+            </h3>
+
+            <div class="card-tools">
+                <span class="badge badge-dark" title="Son Katılan 8 Üye">8 Adet</span>
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Küçült">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove" title="Kapat">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body p-0">
+            <ul class="users-list clearfix">
+                @foreach (var item in Model)
+                {
+                <li>
+                    <img src="~/userimage/@item.ImageUrl" class="img-circle img-size-32" alt="@item.Name @item.Surname">
+                    <a class="users-list-name" href="/Admin/Writer/Profile/@item.Id">@item.Name @item.Surname</a>
+                    <span class="users-list-name">@item.Email</span>
+                </li>
+                }
+            </ul>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer text-center">
+            <a href="/Admin/Writer/Index/">Tüm Üyeler</a>
+        </div>
+        <!-- /.card-footer -->
+    </div>

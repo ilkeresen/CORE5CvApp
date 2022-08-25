@@ -1,0 +1,386 @@
+﻿@using Microsoft.AspNetCore.Http
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Writer/Views/Shared/_WriterLayout.cshtml";
+}
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3>@ViewBag.MessageCount<sup style="font-size: 20px"> Adet</sup></h3>
+
+                        <p>Gelen Mesaj Sayısı</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <a href="/Writer/Message/ReceiverMessage/" class="small-box-footer">Daha Fazla Bilgi <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3>@ViewBag.AnnouncementCount<sup style="font-size: 20px"> Adet</sup></h3>
+
+                        <p>Toplam Duyuru Sayısı</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-list"></i>
+                    </div>
+                    <a href="/Writer/Profile/Index/" class="small-box-footer">Daha Fazla Bilgi <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-indigo">
+                    <div class="inner">
+                        <h3>@ViewBag.UserCount<sup style="font-size: 20px"> Adet</sup></h3>
+
+                        <p>Toplam Kullanıcı Sayısı</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-person-add"></i>
+                    </div>
+                    <a href="/Writer/Profile/Index/" class="small-box-footer">Daha Fazla Bilgi <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-danger">
+                    <div class="inner">
+                        <h3>@ViewBag.SkillCount<sup style="font-size: 20px"> Adet</sup></h3>
+
+                        <p>Gönderilen Mesaj Sayısı</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-envelope-open"></i>
+                    </div>
+                    <a href="/Writer/Message/SenderMessage/" class="small-box-footer">Daha Fazla Bilgi <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+        </div>
+        <!-- /.row -->
+        <!-- Main row -->
+        <div class="row">
+            <!-- Left col -->
+            <section class="col-lg-4 connectedSortable">
+                <!-- Widget: user widget style 2 -->
+                <div class="card card-widget widget-user-2">
+                    <!-- Add the bg color to the header using any of the bg-* classes -->
+                    <div class="widget-user-header bg-warning">
+                        <div class="widget-user-image">
+                            <img class="img-circle elevation-2" src="~/userimage/@Context.Session.GetString("ImageUrl")" alt="@Context.Session.GetString("Name") @Context.Session.GetString("Surname")">
+                        </div>
+                        <!-- /.widget-user-image -->
+                        <h3 class="widget-user-username">Hoş Geldin</h3>
+                        <h5 class="widget-user-desc">@Context.Session.GetString("Name") @Context.Session.GetString("Surname")</h5>
+                    </div>
+                    <div class="card-footer p-0">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a href="/Writer/Message/SenderMessage/" class="nav-link">
+                                    Gelen Mesaj Sayısı <span class="float-right badge bg-info">@ViewBag.MessageCount</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/Writer/Profile/Index/" class="nav-link">
+                                    Toplam Duyuru Sayısı <span class="float-right badge bg-success">@ViewBag.AnnouncementCount</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/Writer/Profile/Index/" class="nav-link">
+                                    Toplam Kullanıcı Sayısı <span class="float-right badge bg-indigo">@ViewBag.UserCount</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="/Writer/Message/SenderMessage/" class="nav-link">
+                                    Gönderilen Mesaj Sayısı <span class="float-right badge bg-danger">@ViewBag.SkillCount</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /.widget-user -->
+                <!-- TAKVİM -->
+                <div class="card bg-gradient-dark">
+                    <div class="card-header border-0">
+
+                        <h3 class="card-title">
+                            <i class="far fa-calendar-alt mr-1"></i>
+                            Takvim
+                            <div hidden id="sparkline-1"></div>
+                            <div hidden id="sparkline-2"></div>
+                            <div hidden id="sparkline-3"></div>
+                        </h3>
+                        <!-- tools card -->
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-dark btn-sm" data-card-widget="collapse" title="Küçült">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-dark btn-sm" data-card-widget="remove" title="Kapat">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <!-- /. tools -->
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body pt-0">
+                        <!--The calendar -->
+                        <div id="calendar" style="width: 100%"></div>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.TAKVİM -->
+            </section>
+            <!-- /.Left col -->
+            <!-- right col -->
+            <section class="col-lg-8 connectedSortable">
+                <!-- AdminDashboardToDoList row -->
+                @await Component.InvokeAsync("AdminDashboardToDoList")
+                <!-- /.AdminDashboardToDoList row -->
+            </section>
+            <!-- right col -->
+        </div>
+        <!-- /.row (main row) -->
+    </div><!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+
+@section Scripts
+{
+    <script>
+
+        $(function () {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+            Inputmask().mask("UpdateDate");
+            Inputmask().mask("Date");
+            //todo DELETE
+            $(document).on("click", ".ToDoDelete", function () {
+                var id = $(this).attr("data-id");
+                $("#Id").val(id);
+            });
+
+            $("#ToDoDelete").click(function () {
+                var id = $("#Id").val();
+                console.log(id);
+                debugger
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/ToDo/ToDoDelete/",
+                    data: { "id": id },
+                    dataType: "json",
+                    success: function () {
+                        $('#todo-delete').modal('hide')
+                        toastr.success('Silme İşlemi Başarılı.')
+                        setInterval(function () {
+                            location.reload();
+                        }, 1500);
+                    }
+                });
+            });
+
+            //todo UpdateT
+            $(".ToDoUpdateT").click(function () {
+                var id = $(this).attr("id");
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/ToDo/ToDoUpdateT/",
+                    data: { "id": id },
+                    dataType: "json",
+                    success: function () {
+                        toastr.success('Güncelleme İşlemi Başarılı.')
+                        setInterval(function () {
+                            location.reload();
+                        }, 1000);
+                    }
+                });
+            });
+
+            //todo UpdateF
+            $(".ToDoUpdateF").click(function () {
+                var id = $(this).attr("id");
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/ToDo/ToDoUpdateF/",
+                    data: { "id": id },
+                    dataType: "json",
+                    success: function () {
+                        toastr.success('Güncelleme İşlemi Başarılı.')
+                        setInterval(function () {
+                            location.reload();
+                        }, 1000);
+                    }
+                });
+            });
+
+            //todo ADD
+            $("#ToDoAdd").click(function () {
+                $.validator.setDefaults({
+                    submitHandler: function () {
+                        var adddata = $("#ToDoAddForm").serialize();
+                        $.ajax({
+                            type: "POST",
+                            url: "/Admin/ToDo/ToDoAdd/",
+                            data: adddata,
+                            dataType: "json",
+                            success: function () {
+                                $('#todo-add').modal('hide')
+                                toastr.success('Ekleme İşlemi Başarılı.')
+                                setInterval(function () {
+                                    location.reload();
+                                }, 1500);
+                            }
+                        });
+                    }
+                });
+                $('#ToDoAddForm').validate({
+                    rules: {
+                        Date: {
+                            required: true,
+                            normalizer: function (value) {
+                                return $.trim(value);
+                            }
+                        },
+                        TodoContent: {
+                            required: true,
+                            normalizer: function (value) {
+                                return $.trim(value);
+                            }
+                        },
+                    },
+                    messages: {
+                        Date: {
+                            required: "Lütfen boş bırakmayınız."
+                        },
+                        TodoContent: {
+                            required: "Lütfen boş bırakmayınız."
+                        },
+                    },
+                    errorElement: 'span',
+                    errorPlacement: function (error, element) {
+                        error.addClass('invalid-feedback');
+                        element.closest('.form-group').append(error);
+                    },
+                    highlight: function (element, errorClass, validClass) {
+                        $(element).addClass('is-invalid');
+                    },
+                    unhighlight: function (element, errorClass, validClass) {
+                        $(element).removeClass('is-invalid');
+                    }
+                });
+            });
+
+            //todo DETAİL
+            $(document).on("click", ".ToDoDetail", function () {
+                var id = $(this).attr("data-id");
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/ToDo/ToDoGetItem/" + id,
+                    dataType: "json",
+                    success: function (toDo) {
+                        var obj = jQuery.parseJSON(toDo);
+                        console.log(obj);
+                        var date = new Date(obj.Date);
+                        var dateN = date.getDate() + "." + (date.getMonth() + 1) + "." + date.getFullYear()
+                        $("#DetailMail").empty();
+                        $("#DetailContent").empty();
+                        $("#DetailDate").empty();
+                        $("#DetailMail").append(obj.Mail);
+                        $("#DetailContent").append(obj.TodoContent);
+                        $("#DetailDate").append(dateN);
+                    }
+                });
+            });
+
+            //todo UPDATE
+            $(document).on("click", ".ToDoUpdate", function () {
+                var id = $(this).attr("data-id");
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/ToDo/ToDoGetItem/" + id,
+                    dataType: "json",
+                    success: function (toDo) {
+                        var obj = jQuery.parseJSON(toDo);
+                        var date = new Date(obj.Date);
+                        var dateN = date.getDate() + "." + (date.getMonth() + 1) + "." + date.getFullYear()
+                        $("#UpdateId").val(obj.Id);
+                        $("#UpdateDate").val(dateN);
+                        $("#UpdateTodoContent").val(obj.TodoContent);
+                    }
+                });
+            });
+            $("#ToDoUpdate").click(function () {
+                $.validator.setDefaults({
+                    submitHandler: function () {
+                        var updatedata = $("#ToDoUpdateForm").serialize();
+                        $.ajax({
+                            type: "POST",
+                            url: "/Admin/ToDo/ToDoUpdate/",
+                            data: updatedata,
+                            dataType: "json",
+                            success: function () {
+                                $('#todo-update').modal('hide')
+                                toastr.success('Güncelleme İşlemi Başarılı.')
+                                setInterval(function () {
+                                    location.reload();
+                                }, 1500);
+                            }
+                        });
+                    }
+                });
+                $('#ToDoUpdateForm').validate({
+                    rules: {
+                        Date: {
+                            required: true,
+                            normalizer: function (value) {
+                                return $.trim(value);
+                            }
+                        },
+                        TodoContent: {
+                            required: true,
+                            normalizer: function (value) {
+                                return $.trim(value);
+                            }
+                        },
+                    },
+                    messages: {
+                        Date: {
+                            required: "Lütfen boş bırakmayınız."
+                        },
+                        TodoContent: {
+                            required: "Lütfen boş bırakmayınız."
+                        },
+                    },
+                    errorElement: 'span',
+                    errorPlacement: function (error, element) {
+                        error.addClass('invalid-feedback');
+                        element.closest('.form-group').append(error);
+                    },
+                    highlight: function (element, errorClass, validClass) {
+                        $(element).addClass('is-invalid');
+                    },
+                    unhighlight: function (element, errorClass, validClass) {
+                        $(element).removeClass('is-invalid');
+                    }
+                });
+            });
+
+        });
+    </script>
+}

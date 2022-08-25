@@ -1,0 +1,94 @@
+﻿@using EntityLayer.Concrete
+@model List<Portfolio>
+<div class="row">
+    <section class="col-lg-9 connectedSortable">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-chart-pie mr-1"></i>
+                    Projeler
+                </h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Küçült">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Kapat">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div><!-- /.card-header -->
+            <div class="card-body table-responsive p-0">
+                <table class="table table-hover table-valign-middle">
+                    <thead>
+                        <tr>
+                            <th>Proje Ad</th>
+                            <th>Proje Fiyat</th>
+                            <th>Proje Tarih</th>
+                            <th>Proje Tamamlanma</th>
+                            <th>Proje Oranı</th>
+                            <th>Proje Durum</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <img src="/images/portfolio/@item.PortfolioImageUrl" alt="@item.PortfolioHeader" title="@item.PortfolioHeader" class="img-size-32 mr-2">
+                                    @item.PortfolioHeader
+                                </td>
+                                <td>@item.PortfolioPrice ₺</td>
+                                <td>
+                                    @item.PortfolioDate
+                                </td>
+                                <td>
+                                    <div class="progress progress-xs">
+                                        @switch (item.PortfolioValue)
+                                        {
+                                            case > 85:
+                                                <div class="progress-bar bg-green" role="progressbar" aria-volumenow="@item.PortfolioValue" aria-volumemin="0" aria-volumemax="100" style="width: @item.PortfolioValue%">
+                                                </div>
+                                                break;
+                                            case > 70:
+                                                <div class="progress-bar bg-info" role="progressbar" aria-volumenow="@item.PortfolioValue" aria-volumemin="0" aria-volumemax="100" style="width: @item.PortfolioValue%">
+                                                </div>
+                                                break;
+                                            case > 50:
+                                                <div class="progress-bar bg-warning" role="progressbar" aria-volumenow="@item.PortfolioValue" aria-volumemin="0" aria-volumemax="100" style="width: @item.PortfolioValue%">
+                                                </div>
+                                                break;
+                                            case > 1:
+                                                <div class="progress-bar bg-danger" role="progressbar" aria-volumenow="@item.PortfolioValue" aria-volumemin="0" aria-volumemax="100" style="width: @item.PortfolioValue%">
+                                                </div>
+                                                break;
+                                        }
+                                    </div>
+                                    <small>
+                                        @item.PortfolioValue% Tamamlanma Oranı
+                                    </small>
+                                </td>
+                                <td>
+                                    <span class="badge bg-danger">@item.PortfolioFilter</span>
+                                </td>
+                                <td>
+                                    @if (item.PortfolioStatus == true)
+                                    {
+                                        <span class="badge bg-success">Tamamlandı</span>
+                                    }
+                                    else if (item.PortfolioStatus == false)
+                                    {
+                                        <span class="badge bg-warning">Devam Ediyor</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div><!-- /.card-body -->
+            <div class="card-footer text-center">
+                <a href="/Admin/Portfolio/Index/">Tüm Projeler</a>
+            </div>
+        </div>
+
+
+    </section>

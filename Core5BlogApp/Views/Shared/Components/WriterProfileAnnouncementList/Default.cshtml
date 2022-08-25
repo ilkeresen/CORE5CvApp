@@ -1,0 +1,34 @@
+﻿@using EntityLayer.Concrete
+@model List<Announcement>
+
+@{
+    Layout = null;
+}
+
+<div class="timeline timeline-inverse">
+    @foreach (var item in Model)
+    {
+        <!-- timeline time label -->
+        <div class="time-label">
+            <span class="bg-dark">
+                @item.Status
+            </span>
+        </div>
+        <!-- /.timeline-label -->
+        <!-- timeline item -->
+        <div>
+            <i class="fas fa-envelope bg-dark"></i>
+
+            <div class="timeline-item">
+                <span class="time"><i class="far fa-clock"></i> @(((DateTime)item.Date).ToString("dd-MM-yyyy"))</span>
+
+                <h3 class="timeline-header"><b>@item.Title</b></h3>
+
+                <div class="timeline-body">
+                    @item.Content
+                </div>
+            </div>
+        </div>
+        <!-- END timeline item -->
+    }
+</div>

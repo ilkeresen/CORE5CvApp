@@ -1,0 +1,223 @@
+﻿@using EntityLayer.Concrete
+@model List<WriterUser>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Main content -->
+<section class="content">
+
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Yorumlarım Listesi Tablosu</h3>
+
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Küçült">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Kapat">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <table id="dttable" class="table table-striped projects">
+                <thead>
+                    <tr>
+                        <th>
+                            #
+                        </th>
+                        <th>
+                            Resim
+                        </th>
+                        <th>
+                            Ad Soyad
+                        </th>
+                        <th>
+                            İçerik
+                        </th>
+                        <th>
+                            Meslek
+                        </th>
+                        <th>
+                            İşlemler
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int i = 0; }
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @(++i)
+                            </td>
+                            <td>
+                                <img src="~/userimage/@item.ImageUrl" alt="@item.Name @item.Surname" title="@item.Name @item.Surname" class="img-size-32">
+                            </td>
+                            <td>
+                                @item.Name @item.Surname
+                            </td>
+                            <td>
+                                @item.Content
+                            </td>
+                            <td>
+                                @item.Job
+                            </td>
+                            <td style="width:18%;">
+                                @if (item.Status == false)
+                                {
+                                    <button type="button" class="btn btn-outline-info TestimonialAdd" id="@item.Id" data-id="@item.Id" data-toggle="modal" data-target="#testimonial-add">
+                                        <i class="fas fa-edit"></i>
+                                        Vitrine Ekle
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button type="button" class="btn btn-outline-danger TestimonialDelete" id="@item.Id" data-id="@item.Id" data-toggle="modal" data-target="#testimonial-delete">
+                                        <i class="fas fa-trash"></i>
+                                        Vitrinden Kaldır
+                                    </button>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>
+                            #
+                        </th>
+                        <th>
+                            Resim
+                        </th>
+                        <th>
+                            Ad Soyad
+                        </th>
+                        <th>
+                            İçerik
+                        </th>
+                        <th>
+                            Meslek
+                        </th>
+                        <th>
+                            İşlemler
+                        </th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+
+</section>
+<!-- /.content -->
+
+<!-- TESTİMONİAL ADD MODAL -->
+<div class="modal fade" id="testimonial-add" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-info">
+                <h4 class="modal-title"><i class="fas fa-edit"></i> Vitrine Ekle</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <strong>Seçtiğiniz Yorum Vitrine Eklenecektir.</strong>
+                <input type="hidden" name="Id" id="Id" />
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Vazgeç</button>
+                <input type="button" id="TestimonialAdd" class="btn btn-info" value="Vitrine Ekle" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- TESTİMONİAL DELETE MODAL -->
+<div class="modal fade" id="testimonial-delete" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h4 class="modal-title"><i class="fas fa-trash"></i> Vitrinden Kaldır</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <strong>Seçtiğiniz Yorum Vitrinden Kaldırılacaktır.</strong>
+                <input type="hidden" name="Id" id="Id" />
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Vazgeç</button>
+                <input type="button" id="TestimonialDelete" class="btn btn-danger" value="Vitrinden Kaldır" />
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+
+        $(function () {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+
+            //testimonial add
+            $(document).on("click", ".TestimonialAdd", function () {
+                var id = $(this).attr("data-id");
+                $("#Id").val(id);
+            });
+
+            $("#TestimonialAdd").click(function () {
+                var id = $("#Id").val();
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/Testimonial/TestimonialAdd/",
+                    data: { "id": id },
+                    dataType: "json",
+                    success: function () {
+                        $('#testimonial-add').modal('hide')
+                        toastr.success('Vitrine Ekleme İşlemi Başarılı.')
+                        setInterval(function () {
+                            location.reload();
+                        }, 1500);
+                    }
+                });
+            });
+
+            //testimonial DELETE
+            $(document).on("click", ".TestimonialDelete", function () {
+                var id = $(this).attr("data-id");
+                $("#Id").val(id);
+            });
+
+            $("#TestimonialDelete").click(function () {
+                var id = $("#Id").val();
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/Testimonial/TestimonialDelete/",
+                    data: { "id": id },
+                    dataType: "json",
+                    success: function () {
+                        $('#testimonial-delete').modal('hide')
+                        toastr.success('Vitrinden Kaldırma İşlemi Başarılı.')
+                        setInterval(function () {
+                            location.reload();
+                        }, 1500);
+                    }
+                });
+            });
+
+        });
+    </script>
+}

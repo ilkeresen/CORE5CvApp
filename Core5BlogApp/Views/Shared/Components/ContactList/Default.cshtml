@@ -1,0 +1,29 @@
+﻿@using EntityLayer.Concrete
+@model List<Contact>
+
+<div class="section-title">
+    <h2>İLETİŞİM</h2>
+    <p>BENİMLE İLETİŞİME GEÇİN</p>
+</div>
+
+<div class="row mt-2">
+
+    @foreach (var item in Model)
+    {
+        <div class="col-md-6 mt-4 d-flex align-items-stretch">
+            <div class="info-box">
+                <i class="@item.ContactIcon"></i>
+                <h3>@item.ContactHeader</h3>
+                <p>@item.ContactContent</p>
+            </div>
+        </div>
+    }
+
+    <div class="col-md-6 mt-4 d-flex align-items-stretch">
+        <div class="info-box">
+            <i class="bx bx-share-alt"></i>
+            <h3>Sosyal Medya Adreslerim</h3>
+            @await Component.InvokeAsync("SocialMediaList")
+        </div>
+    </div>
+</div>

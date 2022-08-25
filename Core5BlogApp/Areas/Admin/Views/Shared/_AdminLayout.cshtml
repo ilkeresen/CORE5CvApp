@@ -1,0 +1,49 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+
+<!-- Head -->
+
+@await Html.PartialAsync("/Areas/Admin/Views/Admin/HtmlHeadTag.cshtml")
+
+<!-- /.Head -->
+
+<body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+
+        <!-- Navbar -->
+
+        @await Html.PartialAsync("/Areas/Admin/Views/Admin/TopBar.cshtml")
+
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+
+        @await Html.PartialAsync("/Areas/Admin/Views/Admin/LeftBar.cshtml")
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+
+            @await Html.PartialAsync("/Areas/Admin/Views/Admin/PageTopNavigation.cshtml")
+
+            @RenderBody()
+        </div>
+        <!-- /.content-wrapper -->
+        <!-- Footer & Control Sidebar -->
+
+        @await Html.PartialAsync("/Areas/Admin/Views/Admin/Footer.cshtml")
+
+        <!-- /.Footer & Control Sidebar -->
+    </div>
+    <!-- ./wrapper -->
+
+    <!-- Scripts -->
+
+    @await Html.PartialAsync("/Areas/Admin/Views/Admin/HtmlScriptTag.cshtml")
+    @await RenderSectionAsync("Scripts", false) 
+    <!-- /.Scripts -->
+</body>
+</html>

@@ -1,0 +1,48 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+
+<!-- Head -->
+
+@await Html.PartialAsync("/Areas/Writer/Views/Writer/HtmlHeadTag.cshtml")
+
+<!-- /.Head -->
+
+<body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+
+        <!-- Navbar -->
+
+        @await Html.PartialAsync("/Areas/Writer/Views/Writer/TopBar.cshtml")
+
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+
+        @await Html.PartialAsync("/Areas/Writer/Views/Writer/LeftBar.cshtml")
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+
+            @await Html.PartialAsync("/Areas/Writer/Views/Writer/PageTopNavigation.cshtml")
+
+            @RenderBody()
+        </div>
+        <!-- /.content-wrapper -->
+        <!-- Footer & Control Sidebar -->
+
+        @await Html.PartialAsync("/Areas/Writer/Views/Writer/Footer.cshtml")
+
+        <!-- /.Footer & Control Sidebar -->
+    </div>
+    <!-- ./wrapper -->
+    <!-- Scripts -->
+
+    @await Html.PartialAsync("/Areas/Writer/Views/Writer/HtmlScriptTag.cshtml")
+    @await RenderSectionAsync("Scripts", false)
+    <!-- /.Scripts -->
+</body>
+</html>

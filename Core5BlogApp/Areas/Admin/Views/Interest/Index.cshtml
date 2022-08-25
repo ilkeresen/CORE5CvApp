@@ -1,0 +1,508 @@
+﻿@using EntityLayer.Concrete
+@model List<Interest>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<!-- Main content -->
+<section class="content">
+
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">İlgi Alanlarım Listesi Tablosu</h3>
+
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Küçült">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Kapat">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <table id="dttable" class="table table-striped projects">
+                <thead>
+                    <tr>
+                        <th>
+                            #
+                        </th>
+                        <th>
+                            İlgi Alanlarım İkon
+                        </th>
+                        <th>
+                            İlgi Alanlarım İçerik
+                        </th>
+                        <th>
+                            İlgi Alanlarım Renk
+                        </th>
+                        <th class="text-right">
+                            İlgi Alanlarım İşlemleri
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int i = 0; }
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @(++i)
+                            </td>
+                            <td class="pl-5">
+                                <button class="btn btn-dark"><i class="@item.InterestIcon" style="color: @item.InterestColor;"></i></button>
+                            </td>
+                            <td>
+                                @item.InterestName
+                            </td>
+                            <td>
+                                <button class="btn" id="buton768" style="background-color:@item.InterestColor;">@item.InterestColor</button>
+                            </td>
+                            <td class="project-actions text-right">
+                                <button type="button" class="btn btn-outline-info InterestUpdate" id="@item.InterestID" data-id="@item.InterestID" data-toggle="modal" data-target="#interest-update">
+                                    <i class="fas fa-edit"></i>
+                                    Güncelle
+                                </button>
+                                <button type="button" class="btn btn-outline-danger InterestDelete" id="@item.InterestID" data-id="@item.InterestID" data-toggle="modal" data-target="#interest-delete">
+                                    <i class="fas fa-trash"></i>
+                                    Sil
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>
+                            #
+                        </th>
+                        <th>
+                            İlgi Alanlarım İkon
+                        </th>
+                        <th>
+                            İlgi Alanlarım İçerik
+                        </th>
+                        <th>
+                            İlgi Alanlarım Renk
+                        </th>
+                        <th class="text-right">
+                            İlgi Alanlarım İşlemleri
+                        </th>
+                    </tr>
+                </tfoot>
+            </table>
+            <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#interest-add">
+                <i class="fas fa-plus"></i>
+                Yeni İlgi Alanlarım Ekle
+            </button>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+
+</section>
+<!-- /.content -->
+<!-- UPDATE MODAL -->
+<div class="modal fade" id="interest-update" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-info">
+                <h4 class="modal-title"><i class="fas fa-edit"></i> İlgi Alanlarım Güncelle</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <form role="form" id="InterestUpdateForm">
+                <div class="modal-body">
+                    <input type="hidden" name="InterestID" id="UpdateInterestID" />
+                    <div class="form-group">
+                        <label for="UpdateInterestIcon">İlgi Alanlarım İkon</label>
+                        @*<input class="form-control" type="text" id="AboutComponentIcon" name="AboutComponentIcon" />*@
+                        <select class="form-control selectlist" name="InterestIcon" id="UpdateInterestIcon">
+                            <option value="bi bi-book-fill"> &#xF192; KİTAP</option>
+                            <option value="bi bi-github"> &#xF3ED; GİTHUB</option>
+                            <option value="bi bi-filetype-html"> &#xF749; HTML</option>
+                            <option value="bi bi-filetype-css"> &#xF742; CSS</option>
+                            <option value="bi bi-filetype-scss"> &#xF760; SCSS</option>
+                            <option value="bi bi-filetype-js"> &#xF74C; JS</option>
+                            <option value="bi bi-filetype-json"> &#xF791; JSON</option>
+                            <option value="bi bi-filetype-xml"> &#xF76B; XML</option>
+                            <option value="bi bi-archive-fill"> &#xF10C; ARŞİV</option>
+                            <option value="bi bi-award-fill"> &#xF153; ÖDÜL</option>
+                            <option value="bi bi-bag-check-fill"> &#xF170; ÇANTA ONAY</option>
+                            <option value="bi bi-bag-fill"> &#xF174; ÇANTA</option>
+                            <option value="bi bi-bookmark-check-fill"> &#xF195; YER İMİ ONAY</option>
+                            <option value="bi bi-bookmark-fill"> &#xF199; YER İMİ</option>
+                            <option value="bi bi-bookmarks-fill"> &#xF1A3; YER İMLERİ</option>
+                            <option value="bi bi-display-fill"> &#xF301; MONİTÖR</option>
+                            <option value="bi bi-envelope-fill"> &#xF32C; MESAJ</option>
+                            <option value="bi bi-envelope-check-fill"> &#xF68B; MESAJ ONAY</option>
+                            <option value="bi bi-file-code-fill"> &#xF351; DOSYA KOD</option>
+                            <option value="bi bi-image-fill"> &#xF429; RESİM</option>
+                            <option value="bi bi-tablet-fill"> &#xF5AB; TABLET</option>
+                            <option value="bi bi-trash-fill"> &#xF5DD; ÇÖP KUTUSU</option>
+                            <option value="bi bi-calendar-fill"> &#xF1E9; TAKVİM</option>
+                            <option value="bi bi-calendar2-check-fill"> &#xF1F7; TAKVİM ONAY</option>
+                            <option value="bi bi-chat-fill"> &#xF24B; MESAJ BALONU</option>
+                            <option value="bi bi-chat-text-fill"> &#xF266; MESAJ BALONU METİN</option>
+                            <option value="bi bi-cup-fill"> &#xF2DE; BARDAK KUPA</option>
+                            <option value="bi bi-code-slash"> &#xF2C6; KOD SLASH</option>
+                            <option value="bi bi-code"> &#xF2C8; KOD</option>
+                            <option value="bi bi-brush-fill"> &#xF1D7; FIRÇA</option>
+                            <option value="bi bi-music-player-fill"> &#xF4A1; MP3</option>
+                            <option value="bi bi-boombox-fill"> &#xF6DF; RADYO</option>
+                            <option value="bi bi-file-earmark-music-fill"> &#xF376; MÜZİK YER İMİ</option>
+                            <option value="bi bi-file-music-fill"> &#xF3A4; MÜZİK</option>
+                            <option value="bi bi-spotify"> &#xF666; SPOTİFY</option>
+                            <option value="bi bi-earbuds"> &#xF30E; KULAKLIK</option>
+                            <option value="bi bi-ticket-detailed-fill"> &#xF6C6; BİLET DETAY</option>
+                            <option value="bi bi-ticket-fill"> &#xF6C8; BİLET</option>
+                            <option value="bi bi-ticket-perforated-fill"> &#xF6C9; BİLET KESİK</option>
+                            <option value="bi bi-steam"> &#xF6C1; STEAM</option>
+                            <option value="bi bi-bicycle"> &#xF18D; BİSİKLET</option>
+                            <option value="bi bi-geo-alt-fill"> &#xF3E7; KONUM</option>
+                            <option value="bi bi-geo-fill"> &#xF3E9; YUVARLAK KONUM</option>
+                            <option value="bi bi-pin-map-fill"> &#xF64B; KARE KONUM</option>
+                            <option value="bi bi-server"> &#xF52C; SUNUCU</option>
+                            <option value="bi bi-phone"> &#xF4E7; TELEFON</option>
+                            <option value="bi bi-phone-fill"> &#xF4E2; TELEFON DOLU</option>
+                            <option value="bi bi-laptop"> &#xF456; BİLGİSAYAR DİZÜSTÜ</option>
+                            <option value="bi bi-laptop-fill"> &#xF455; BİLGİSAYAR DİZÜSTÜ DOLU</option>
+                            <option value="bi bi-arrow-repeat"> &#xF130; TEKRAR</option>
+                            <option value="bi bi-eyedropper"> &#xF342; DAMLALIK</option>
+                            <option value="bi bi-shop"> &#xF543; MARKET</option>
+                            <option value="bi bi-shop-window"> &#xF542; MARKET VİTRİN</option>
+                            <option value="bi bi-wifi"> &#xF61C; İNTERNET WİFİ</option>
+                            <option value="bi bi-hdd-network-fill"> &#xF40C; İNTERNET DİSK</option>
+                            <option value="bi bi-fonts"> &#xF3DA; METİN YAZI TİPİ</option>
+                            <option value="bi bi-paragraph"> &#xF4B4; METİN PARAGRAF</option>
+                            <option value="bi bi-textarea-t"> &#xF5CB; METİN METİN ALANI</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="UpdateInterestName">İlgi Alanlarım İçerik</label>
+                        <input class="form-control" type="text" id="UpdateInterestName" name="InterestName" />
+                    </div>
+                    <div class="form-group">
+                        <label for="UpdateInterestColor">İlgi Alanlarım Renk</label>
+
+                        <div class="input-group my-colorpicker2">
+                            <input type="text" class="form-control" id="UpdateInterestColor" name="InterestColor" />
+
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="fas fa-square"></i></span>
+                            </div>
+                        </div>
+                        <!-- /.input group -->
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Vazgeç</button>
+                    <button type="submit" class="btn btn-info" id="InterestUpdate">İlgi Alanlarım Güncelle</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ADD MODAL -->
+<div class="modal fade" id="interest-add" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-dark">
+                <h4 class="modal-title"><i class="fas fa-pen-nib"></i> İlgi Alanlarım Ekle</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <form role="form" id="InterestAddForm">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="InterestIcon">İlgi Alanlarım İkon</label>
+                        @*<input class="form-control" type="text" id="AboutComponentIcon" name="AboutComponentIcon" />*@
+                        <select class="form-control selectlist" name="InterestIcon" id="InterestIcon">
+                            <option value="bi bi-book-fill"> &#xF192; KİTAP</option>
+                            <option value="bi bi-github"> &#xF3ED; GİTHUB</option>
+                            <option value="bi bi-filetype-html"> &#xF749; HTML</option>
+                            <option value="bi bi-filetype-css"> &#xF742; CSS</option>
+                            <option value="bi bi-filetype-scss"> &#xF760; SCSS</option>
+                            <option value="bi bi-filetype-js"> &#xF74C; JS</option>
+                            <option value="bi bi-filetype-json"> &#xF791; JSON</option>
+                            <option value="bi bi-filetype-xml"> &#xF76B; XML</option>
+                            <option value="bi bi-archive-fill"> &#xF10C; ARŞİV</option>
+                            <option value="bi bi-award-fill"> &#xF153; ÖDÜL</option>
+                            <option value="bi bi-bag-check-fill"> &#xF170; ÇANTA ONAY</option>
+                            <option value="bi bi-bag-fill"> &#xF174; ÇANTA</option>
+                            <option value="bi bi-bookmark-check-fill"> &#xF195; YER İMİ ONAY</option>
+                            <option value="bi bi-bookmark-fill"> &#xF199; YER İMİ</option>
+                            <option value="bi bi-bookmarks-fill"> &#xF1A3; YER İMLERİ</option>
+                            <option value="bi bi-display-fill"> &#xF301; MONİTÖR</option>
+                            <option value="bi bi-envelope-fill"> &#xF32C; MESAJ</option>
+                            <option value="bi bi-envelope-check-fill"> &#xF68B; MESAJ ONAY</option>
+                            <option value="bi bi-file-code-fill"> &#xF351; DOSYA KOD</option>
+                            <option value="bi bi-image-fill"> &#xF429; RESİM</option>
+                            <option value="bi bi-tablet-fill"> &#xF5AB; TABLET</option>
+                            <option value="bi bi-trash-fill"> &#xF5DD; ÇÖP KUTUSU</option>
+                            <option value="bi bi-calendar-fill"> &#xF1E9; TAKVİM</option>
+                            <option value="bi bi-calendar2-check-fill"> &#xF1F7; TAKVİM ONAY</option>
+                            <option value="bi bi-chat-fill"> &#xF24B; MESAJ BALONU</option>
+                            <option value="bi bi-chat-text-fill"> &#xF266; MESAJ BALONU METİN</option>
+                            <option value="bi bi-cup-fill"> &#xF2DE; BARDAK KUPA</option>
+                            <option value="bi bi-code-slash"> &#xF2C6; KOD SLASH</option>
+                            <option value="bi bi-code"> &#xF2C8; KOD</option>
+                            <option value="bi bi-brush-fill"> &#xF1D7; FIRÇA</option>
+                            <option value="bi bi-music-player-fill"> &#xF4A1; MP3</option>
+                            <option value="bi bi-boombox-fill"> &#xF6DF; RADYO</option>
+                            <option value="bi bi-file-earmark-music-fill"> &#xF376; MÜZİK YER İMİ</option>
+                            <option value="bi bi-file-music-fill"> &#xF3A4; MÜZİK</option>
+                            <option value="bi bi-spotify"> &#xF666; SPOTİFY</option>
+                            <option value="bi bi-earbuds"> &#xF30E; KULAKLIK</option>
+                            <option value="bi bi-ticket-detailed-fill"> &#xF6C6; BİLET DETAY</option>
+                            <option value="bi bi-ticket-fill"> &#xF6C8; BİLET</option>
+                            <option value="bi bi-ticket-perforated-fill"> &#xF6C9; BİLET KESİK</option>
+                            <option value="bi bi-steam"> &#xF6C1; STEAM</option>
+                            <option value="bi bi-bicycle"> &#xF18D; BİSİKLET</option>
+                            <option value="bi bi-geo-alt-fill"> &#xF3E7; KONUM</option>
+                            <option value="bi bi-geo-fill"> &#xF3E9; YUVARLAK KONUM</option>
+                            <option value="bi bi-pin-map-fill"> &#xF64B; KARE KONUM</option>
+                            <option value="bi bi-server"> &#xF52C; SUNUCU</option>
+                            <option value="bi bi-phone"> &#xF4E7; TELEFON</option>
+                            <option value="bi bi-phone-fill"> &#xF4E2; TELEFON DOLU</option>
+                            <option value="bi bi-laptop"> &#xF456; BİLGİSAYAR DİZÜSTÜ</option>
+                            <option value="bi bi-laptop-fill"> &#xF455; BİLGİSAYAR DİZÜSTÜ DOLU</option>
+                            <option value="bi bi-arrow-repeat"> &#xF130; TEKRAR</option>
+                            <option value="bi bi-eyedropper"> &#xF342; DAMLALIK</option>
+                            <option value="bi bi-shop"> &#xF543; MARKET</option>
+                            <option value="bi bi-shop-window"> &#xF542; MARKET VİTRİN</option>
+                            <option value="bi bi-wifi"> &#xF61C; İNTERNET WİFİ</option>
+                            <option value="bi bi-hdd-network-fill"> &#xF40C; İNTERNET DİSK</option>
+                            <option value="bi bi-fonts"> &#xF3DA; METİN YAZI TİPİ</option>
+                            <option value="bi bi-paragraph"> &#xF4B4; METİN PARAGRAF</option>
+                            <option value="bi bi-textarea-t"> &#xF5CB; METİN METİN ALANI</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="InterestName">İlgi Alanlarım İçerik</label>
+                        <input class="form-control" type="text" id="InterestName" name="InterestName" />
+                    </div>
+                    <div class="form-group">
+                        <label for="InterestColor">İlgi Alanlarım Renk</label>
+
+                        <div class="input-group my-colorpicker2">
+                            <input type="text" class="form-control" id="InterestColor" name="InterestColor" />
+
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="fas fa-square"></i></span>
+                            </div>
+                        </div>
+                        <!-- /.input group -->
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Vazgeç</button>
+                    <button type="submit" class="btn btn-dark" id="InterestAdd">İlgi Alanlarım Ekle</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- DELETE MODAL -->
+<div class="modal fade" id="interest-delete" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h4 class="modal-title"><i class="fas fa-trash"></i> Emin Misin?</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <strong>Seçtiğiniz İlgi Alanlarım silinecektir.</strong>
+                <input type="hidden" name="InterestID" id="InterestID" />
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Vazgeç</button>
+                <input type="button" id="InterestDelete" class="btn btn-danger" value="İlgi Alanlarım Sil" />
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+
+        $(function () {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+
+            //color picker with addon
+            $('.my-colorpicker2').colorpicker()
+
+            $('.my-colorpicker2').on('colorpickerChange', function (event) {
+                $('.my-colorpicker2 .fa-square').css('color', event.color.toString());
+            });
+
+            //INTEREST DELETE
+            $(document).on("click", ".InterestDelete", function () {
+                var id = $(this).attr("data-id");
+                $("#InterestID").val(id);
+            });
+
+            $("#InterestDelete").click(function () {
+                var id = $("#InterestID").val();
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/Interest/InterestDelete/",
+                    data: { "id": id },
+                    dataType: "json",
+                    success: function () {
+                        $('#interest-delete').modal('hide')
+                        toastr.success('Silme İşlemi Başarılı.')
+                        setInterval(function () {
+                            location.reload();
+                        }, 1500);
+                    }
+                });
+            });
+
+            //INTEREST ADD
+            $("#InterestAdd").click(function () {
+                $.validator.setDefaults({
+                    submitHandler: function () {
+                        var adddata = $("#InterestAddForm").serialize();
+                        $.ajax({
+                            type: "POST",
+                            url: "/Admin/Interest/InterestAdd/",
+                            data: adddata,
+                            dataType: "json",
+                            success: function () {
+                                $('#interest-add').modal('hide')
+                                toastr.success('Ekleme İşlemi Başarılı.')
+                                setInterval(function () {
+                                    location.reload();
+                                }, 1500);
+                            }
+                        });
+                    }
+                });
+                $('#InterestAddForm').validate({
+                    rules: {
+                        InterestName: {
+                            required: true,
+                            normalizer: function (value) {
+                                return $.trim(value);
+                            }
+                        },
+                        InterestColor: {
+                            required: true,
+                            normalizer: function (value) {
+                                return $.trim(value);
+                            }
+                        },
+                    },
+                    messages: {
+                        InterestName: {
+                            required: "Lütfen boş bırakmayınız."
+                        },
+                        InterestColor: {
+                            required: "Lütfen boş bırakmayınız."
+                        },
+                    },
+                    errorElement: 'span',
+                    errorPlacement: function (error, element) {
+                        error.addClass('invalid-feedback');
+                        element.closest('.form-group').append(error);
+                    },
+                    highlight: function (element, errorClass, validClass) {
+                        $(element).addClass('is-invalid');
+                    },
+                    unhighlight: function (element, errorClass, validClass) {
+                        $(element).removeClass('is-invalid');
+                    }
+                });
+            });
+
+            //INTEREST UPDATE
+            $(document).on("click", ".InterestUpdate", function () {
+                var id = $(this).attr("data-id");
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/Interest/InterestGetItem/" + id,
+                    dataType: "json",
+                    success: function (interest) {
+                        var obj = jQuery.parseJSON(interest);
+                        $("#UpdateInterestID").val(obj.InterestID);
+                        $("#UpdateInterestIcon").val(obj.InterestIcon);
+                        $("#UpdateInterestName").val(obj.InterestName);
+                        $("#UpdateInterestColor").val(obj.InterestColor);
+                    }
+                });
+            });
+            $("#InterestUpdate").click(function () {
+                $.validator.setDefaults({
+                    submitHandler: function () {
+                        var updatedata = $("#InterestUpdateForm").serialize();
+                        $.ajax({
+                            type: "POST",
+                            url: "/Admin/Interest/InterestUpdate/",
+                            data: updatedata,
+                            dataType: "json",
+                            success: function () {
+                                $('#interest-update').modal('hide')
+                                toastr.success('Güncelleme İşlemi Başarılı.')
+                                setInterval(function () {
+                                    location.reload();
+                                }, 1500);
+                            }
+                        });
+                    }
+                });
+                $('#InterestUpdateForm').validate({
+                    rules: {
+                        InterestName: {
+                            required: true,
+                            normalizer: function (value) {
+                                return $.trim(value);
+                            }
+                        },
+                        InterestColor: {
+                            required: true,
+                            normalizer: function (value) {
+                                return $.trim(value);
+                            }
+                        },
+                    },
+                    messages: {
+                        InterestName: {
+                            required: "Lütfen boş bırakmayınız."
+                        },
+                        InterestColor: {
+                            required: "Lütfen boş bırakmayınız."
+                        },
+                    },
+                    errorElement: 'span',
+                    errorPlacement: function (error, element) {
+                        error.addClass('invalid-feedback');
+                        element.closest('.form-group').append(error);
+                    },
+                    highlight: function (element, errorClass, validClass) {
+                        $(element).addClass('is-invalid');
+                    },
+                    unhighlight: function (element, errorClass, validClass) {
+                        $(element).removeClass('is-invalid');
+                    }
+                });
+            });
+
+        });
+    </script>
+}

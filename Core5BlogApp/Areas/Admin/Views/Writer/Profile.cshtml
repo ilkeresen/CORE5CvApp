@@ -1,0 +1,142 @@
+﻿
+@{
+    ViewData["Title"] = "Profile";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+@*ViewBag.UserName = user.UserName;
+    ViewBag.Name = user.Name;
+    ViewBag.Surname = user.Surname;
+    ViewBag.Email = user.Email;
+    ViewBag.PhoneNumber = user.PhoneNumber;
+    ViewBag.ImageUrl = user.ImageUrl;
+    ViewBag.Job = user.Job;
+    ViewBag.Content = user.Content;*@
+
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                <!-- Profile Image -->
+                <div class="card card-dark">
+                    <div class="card-header w-100">
+                        <h3 class="card-title"><b>@ViewBag.Name @ViewBag.Surname</b> Yazar Resmi</h3>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Küçült">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Kapat">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body box-profile">
+                        <img class="img-fluid" src="~/userimage/@ViewBag.ImageUrl" alt="@ViewBag.Name @ViewBag.Surname">
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-8">
+                <div class="card card-dark">
+                    <div class="card-header w-100">
+                        <h3 class="card-title"><b>@ViewBag.Name @ViewBag.Surname</b> Yazar Bilgileri</h3>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Küçült">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Kapat">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-body">
+                            <strong><i class="fas fa-user mr-1"></i> Yazar Adı</strong>
+                            <p class="text-muted">
+                                @ViewBag.Name
+                            </p>
+                            <hr>
+                            <strong><i class="fas fa-user mr-1"></i> Yazar Soyadı</strong>
+                            <p class="text-muted">
+                                @ViewBag.Surname
+                            </p>
+                            <hr>
+                            <strong><i class="fas fa-envelope mr-1"></i> Yazar E-Posta Adresi</strong>
+                            <p class="text-muted">
+                                @ViewBag.Email
+                            </p>
+                            <hr>
+                            <strong><i class="fas fa-address-card mr-1"></i> Yazar Kullanıcı Adı</strong>
+                            <p class="text-muted">
+                                @ViewBag.UserName
+                            </p>
+                            <hr>
+                            <strong><i class="fas fa-phone mr-1"></i> Yazar Telefon Numarası</strong>
+                            <p class="text-muted">
+                                @ViewBag.PhoneNumber
+                            </p>
+                            <hr>
+                            <strong><i class="fas fa-user-edit mr-1"></i> Yazar Mesleği</strong>
+                            <p class="text-muted">
+                                @ViewBag.Job
+                            </p>
+                            <hr>
+                            <strong><i class="fas fa-comment mr-1"></i> Yazar Hakkımda Yorumu</strong>
+                            <p class="text-muted">
+                                @ViewBag.Content
+                            </p>
+                            <hr>
+                        </div>
+                        <!-- /.tab-content -->
+                    </div><!-- /.card-body -->
+                </div>
+                <!-- /.nav-tabs-custom -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+@*<div class="card-body">
+        <strong><i class="fas fa-user mr-1"></i> Yazar Adı</strong>
+        <p class="text-muted">
+            @ViewBag.Name
+        </p>
+        <hr>
+        <strong><i class="fas fa-user mr-1"></i> Yazar Soyadı</strong>
+        <p class="text-muted">
+            @ViewBag.Surname
+        </p>
+        <hr>
+        <strong><i class="fas fa-envelope mr-1"></i> Yazar E-Posta Adresi</strong>
+        <p class="text-muted">
+            @ViewBag.Email
+        </p>
+        <hr>
+        <strong><i class="fas fa-address-card mr-1"></i> Yazar Kullanıcı Adı</strong>
+        <p class="text-muted">
+            @ViewBag.UserName
+        </p>
+        <hr>
+        <strong><i class="fas fa-phone mr-1"></i> Yazar Telefon Numarası</strong>
+        <p class="text-muted">
+            @ViewBag.PhoneNumber
+        </p>
+        <hr>
+        <strong><i class="fas fa-user-edit mr-1"></i> Yazar Mesleği</strong>
+        <p class="text-muted">
+            @ViewBag.Job
+        </p>
+        <hr>
+        <strong><i class="fas fa-comment mr-1"></i> Yazar Hakkımda Yorumu</strong>
+        <p class="text-muted">
+            @ViewBag.Content
+        </p>
+        <hr>
+    </div>*@

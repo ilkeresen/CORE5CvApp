@@ -1,0 +1,69 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+@await Html.PartialAsync("HtmlHeadTag")
+
+<body>
+
+    <!-- ======= Header ======= -->
+    <header id="header">
+        @await Component.InvokeAsync("HomeList")
+    </header>
+    <!-- End Header -->
+    <!-- ======= About Section ======= -->
+    <section id="about" class="about">
+        <!-- ======= About Me ======= -->
+        @await Component.InvokeAsync("AboutList")
+        <!-- End About Me -->
+        <!-- ======= Counts ======= -->
+        @await Component.InvokeAsync("AboutComponentList")
+        <!-- End Counts -->
+        <!-- ======= Skills  ======= -->
+        @await Component.InvokeAsync("SkillList")
+        <!-- End Skills -->
+        <!-- ======= Interests ======= -->
+        @await Component.InvokeAsync("InterestList")
+        <!-- End Interests -->
+        <!-- ======= Testimonials ======= -->
+        @await Component.InvokeAsync("TestimonialList")
+        <!-- End Testimonials  -->
+    </section>
+    <!-- End About Section -->
+    <!-- ======= Resume Section ======= -->
+    <section id="resume" class="resume">
+        @await Component.InvokeAsync("ResumeList")
+    </section>
+    <!-- End Resume Section -->
+    <!-- ======= Services Section ======= -->
+    <section id="services" class="services">
+        @await Component.InvokeAsync("ServiceList")
+    </section>
+    <!-- End Services Section -->
+    <!-- ======= Portfolio Section ======= -->
+    <section id="portfolio" class="portfolio">
+        @await Component.InvokeAsync("PortfolioList")
+    </section>
+    <!-- End Portfolio Section -->
+    <!-- ======= Contact Section ======= -->
+    <section id="contact" class="contact">
+        <div class="container">
+            @await Component.InvokeAsync("ContactList")
+            <!-- || -->
+            @*@await Component.InvokeAsync("ContactMessage")*@
+            @await Html.PartialAsync("ContactMessage")
+        </div>
+    </section>
+    <!-- End Contact Section -->
+    <!-- Footer -->
+    @await Html.PartialAsync("Footer")
+    <!-- End Footer -->
+    <!-- JS Files -->
+    @await Html.PartialAsync("Scripts")
+    <!-- End JS File -->
+</body>
+</html>

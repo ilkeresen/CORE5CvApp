@@ -1,0 +1,30 @@
+﻿<!-- Profile Image -->
+<div class="card card-dark card-outline">
+    <div class="card-body box-profile">
+        <div class="text-center">
+            <img class="profile-user-img img-fluid img-circle"
+                 src="~/userimage/@ViewData["ImageUrl"]"
+                 alt="@ViewData["Name"] @ViewData["SurName"]">
+        </div>
+
+        <h3 class="profile-username text-center">@ViewData["Name"] @ViewData["SurName"]</h3>
+
+        <p class="text-muted text-center">@ViewData["Email"]</p>
+
+        <ul class="list-group list-group-unbordered mb-3">
+            <li class="list-group-item">
+                <b>Gelen Mesaj</b> <a class="float-right">@ViewBag.MessageCount</a>
+            </li>
+            <li class="list-group-item">
+                <b>Duyurular</b> <a class="float-right">@ViewBag.AnnouncementCount</a>
+            </li>
+            <li class="list-group-item">
+                <b>Gönderilen Mesaj</b> <a class="float-right">@ViewBag.SkillCount</a>
+            </li>
+        </ul>
+
+        <a href="/Writer/Message/AddMessage/" class="btn btn-dark btn-block"><b>Yeni Mesaj Gönder</b></a>
+    </div>
+    <!-- /.card-body -->
+</div>
+<!-- /.card -->

@@ -1,0 +1,17 @@
+﻿#buton768 {
+    width: 50%;
+}
+
+@media only screen and (max-width: 768px) {
+    #buton768 {
+        width: 100%;
+    }
+}
+
+.selectlist {
+    font-family: "bootstrap-icons";
+}
+
+.pagination {
+    float: right !important;
+}

@@ -1,0 +1,617 @@
+﻿@using EntityLayer.Concrete
+@model List<Portfolio>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Main content -->
+<section class="content">
+
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Referanslarım Listesi Tablosu</h3>
+
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Küçült">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Kapat">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <table id="dttable" class="table table-striped projects">
+                <thead>
+                    <tr>
+                        <th>
+                            #
+                        </th>
+                        <th>
+                            Referanslarım Başlık
+                        </th>
+                        <th>
+                            Referanslarım Filtre
+                        </th>
+                        <th>
+                            Referanslarım Fiyat
+                        </th>
+                        <th>
+                            Referanslarım Durum
+                        </th>
+                        <th>
+                            Referanslarım Tamamlanma
+                        </th>
+                        <th>
+                            Referanslarım Tarih
+                        </th>
+                        <th>
+                            Referanslarım İşlemler
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int i = 0; }
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @(++i)
+                            </td>
+                            <td>
+                                <img src="/images/portfolio/@item.PortfolioImageUrl" alt="@item.PortfolioHeader" title="@item.PortfolioHeader" class="img-size-32 mr-2">
+                                @item.PortfolioHeader
+                            </td>
+                            <td class="text-center">
+                                <span class="badge bg-danger">@item.PortfolioFilter</span>
+                            </td>
+                            <td class="text-center">@item.PortfolioPrice ₺</td>
+                            <td>
+                                @if (item.PortfolioStatus == true)
+                                {
+                                    <span class="badge bg-success">Tamamlandı</span>
+                                }
+                                else if (item.PortfolioStatus == false)
+                                {
+                                    <span class="badge bg-warning">Devam Ediyor</span>
+                                }
+                            </td>
+                            <td>
+                                <div class="progress progress-xs">
+                                    @switch (item.PortfolioValue)
+                                    {
+                                        case > 85:
+                                            <div class="progress-bar bg-green" role="progressbar" aria-volumenow="@item.PortfolioValue" aria-volumemin="0" aria-volumemax="100" style="width: @item.PortfolioValue%">
+                                            </div>
+                                            break;
+                                        case > 70:
+                                            <div class="progress-bar bg-info" role="progressbar" aria-volumenow="@item.PortfolioValue" aria-volumemin="0" aria-volumemax="100" style="width: @item.PortfolioValue%">
+                                            </div>
+                                            break;
+                                        case > 50:
+                                            <div class="progress-bar bg-warning" role="progressbar" aria-volumenow="@item.PortfolioValue" aria-volumemin="0" aria-volumemax="100" style="width: @item.PortfolioValue%">
+                                            </div>
+                                            break;
+                                        case > 1:
+                                            <div class="progress-bar bg-danger" role="progressbar" aria-volumenow="@item.PortfolioValue" aria-volumemin="0" aria-volumemax="100" style="width: @item.PortfolioValue%">
+                                            </div>
+                                            break;
+                                    }
+                                </div>
+                                <small>
+                                    @item.PortfolioValue% Tamamlanma Oranı
+                                </small>
+                            </td>
+                            <td>
+                                @item.PortfolioDate
+                            </td>
+                            <td class="project-actions">
+                                <button type="button" class="btn btn-xs btn-outline-info PortfolioUpdate" id="@item.PortfolioID" data-id="@item.PortfolioID" data-toggle="modal" data-target="#portfolio-update">
+                                    <i class="fas fa-edit"></i>
+                                    Güncelle
+                                </button>
+                                <button type="button" class="btn btn-xs btn-outline-danger PortfolioDelete" id="@item.PortfolioID" data-id="@item.PortfolioID" data-toggle="modal" data-target="#portfolio-delete">
+                                    <i class="fas fa-trash"></i>
+                                    Sil
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>
+                            #
+                        </th>
+                        <th>
+                            Referanslarım Başlık
+                        </th>
+                        <th>
+                            Referanslarım Filtre
+                        </th>
+                        <th>
+                            Referanslarım Fiyat
+                        </th>
+                        <th>
+                            Referanslarım Durum
+                        </th>
+                        <th>
+                            Referanslarım Tamamlanma
+                        </th>
+                        <th>
+                            Referanslarım Tarih
+                        </th>
+                        <th>
+                            Referanslarım İşlemler
+                        </th>
+                    </tr>
+                </tfoot>
+            </table>
+            <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#portfolio-add">
+                <i class="fas fa-plus"></i>
+                Yeni Referanslarım Ekle
+            </button>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+
+</section>
+<!-- /.content -->
+
+
+<!-- UPDATE MODAL -->
+<div class="modal fade" id="portfolio-update" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-info">
+                <h4 class="modal-title"><i class="fas fa-edit"></i> Referans Güncelle</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <form role="form" id="PortfolioUpdateForm">
+                <div class="modal-body">
+                    <input type="hidden" id="UpdatePortfolioID" name="PortfolioID" />
+                    <div class="form-group">
+                        <label for="UpdatePortfolioHeader">Referans Başlık</label>
+                        <input class="form-control" type="text" id="UpdatePortfolioHeader" name="PortfolioHeader" />
+                    </div>
+                    <div class="form-group">
+                        <label for="UpdatePortfolioContent">Referans İçerik</label>
+                        <textarea id="UpdatePortfolioContent" rows="3" class="form-control" name="PortfolioContent" style="resize:none;"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="UpdatePortfolioImageUrl">Referans Resim</label>
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="UpdatePortfolioImageUrl" name="PortfolioImageUrl" accept="image/png, image/jpg, image/jpeg">
+                                <label class="custom-file-label" for="PortfolioImageUrl">Dosya Seçiniz (.png|.jpg|.jpeg)</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="PortfolioFilter">Referans Filtre</label>
+                        <select id="UpdatePortfolioFilter" name="PortfolioFilter" class="form-control">
+                            <option value="web">Web</option>
+                            <option value="mobile">Mobile</option>
+                            <option value="data">Data</option>
+                            <option value="test">Test</option>
+                            <option value="marketing">Marketing</option>
+                            <option value="seo">Seo</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="UpdatePortfolioPrice">Referans Fiyat (0-99999)</label>
+                        <input class="form-control" type="number" min="0" max="99999" id="UpdatePortfolioPrice" name="PortfolioPrice" />
+                    </div>
+                    <div class="form-group">
+                        <label for="UpdatePortfolioStatus">Referans Durum</label>
+                        <select id="UpdatePortfolioStatus" name="PortfolioStatus" class="form-control">
+                            <option value="true">Tamamlandı</option>
+                            <option value="false">Devam Ediyor</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="UpdatePortfolioValue">Referans Tamamlanma Oranı (0-100)</label>
+                        <input class="form-control" type="number" min="0" max="100" id="UpdatePortfolioValue" name="PortfolioValue" />
+                    </div>
+                    <div class="form-group">
+                        <label for="UpdatePortfolioDate">Referans Tarih</label>
+                        <input class="form-control" type="text" id="UpdatePortfolioDate" name="PortfolioDate" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask />
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Vazgeç</button>
+                    <button type="submit" class="btn btn-info" id="PortfolioUpdate">Yetenek Güncelle</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ADD MODAL -->
+<div class="modal fade" id="portfolio-add" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-dark">
+                <h4 class="modal-title"><i class="fas fa-pen-nib"></i> Referans Ekle</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <form role="form" id="PortfolioAddForm">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="PortfolioHeader">Referans Başlık</label>
+                        <input class="form-control" type="text" id="PortfolioHeader" name="PortfolioHeader" />
+                    </div>
+                    <div class="form-group">
+                        <label for="PortfolioContent">Referans İçerik</label>
+                        <textarea id="PortfolioContent" rows="3" class="form-control" name="PortfolioContent" style="resize:none;"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="PortfolioImageUrl">Referans Resim</label>
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" name="PortfolioImageUrl" id="PortfolioImageUrl" accept="image/png, image/jpg, image/jpeg">
+                                <label class="custom-file-label" for="PortfolioImageUrl">Dosya Seçiniz (.png|.jpg|.jpeg)</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="PortfolioFilter">Referans Filtre</label>
+                        <select name="PortfolioFilter" id="PortfolioFilter" class="form-control">
+                            <option value="web">Web</option>
+                            <option value="mobile">Mobile</option>
+                            <option value="data">Data</option>
+                            <option value="test">Test</option>
+                            <option value="marketing">Marketing</option>
+                            <option value="seo">Seo</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="PortfolioPrice">Referans Fiyat (0-99999)</label>
+                        <input class="form-control" type="number" min="0" max="99999" id="PortfolioPrice" name="PortfolioPrice" />
+                    </div>
+                    <div class="form-group">
+                        <label for="PortfolioStatus">Referans Durum</label>
+                        <select name="PortfolioStatus" id="PortfolioStatus" class="form-control">
+                            <option value="true">Tamamlandı</option>
+                            <option value="false">Devam Ediyor</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="PortfolioValue">Referans Tamamlanma Oranı (0-100)</label>
+                        <input class="form-control" type="number" min="0" max="100" id="PortfolioValue" name="PortfolioValue" />
+                    </div>
+                    <div class="form-group">
+                        <label for="PortfolioDate">Referans Tarih</label>
+                        <input class="form-control" type="text" id="PortfolioDate" name="PortfolioDate" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask />
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Vazgeç</button>
+                    <button type="submit" class="btn btn-dark" id="PortfolioAdd">Referans Ekle</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- DELETE MODAL -->
+<div class="modal fade" id="portfolio-delete" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h4 class="modal-title"><i class="fas fa-trash"></i> Emin Misin?</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <strong>Seçtiğiniz Referans silinecektir.</strong>
+                <input type="hidden" name="PortfolioID" id="PortfolioID" />
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Vazgeç</button>
+                <input type="button" id="PortfolioDelete" class="btn btn-danger" value="Referans Sil" />
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+
+        $(function () {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+            $('[data-mask]').inputmask()
+            //PORTFOLİO DELETE
+            $(document).on("click", ".PortfolioDelete", function () {
+                var id = $(this).attr("data-id");
+                $("#PortfolioID").val(id);
+            });
+
+            $("#PortfolioDelete").click(function () {
+                var id = $("#PortfolioID").val();
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/Portfolio/PortfolioDelete/",
+                    data: { "id": id },
+                    dataType: "json",
+                    success: function () {
+                        $('#portfolio-delete').modal('hide')
+                        toastr.success('Silme İşlemi Başarılı.')
+                        setInterval(function () {
+                            location.reload();
+                        }, 1500);
+                    }
+                });
+            });
+
+            //PORTFOLİO ADD
+            $("#PortfolioAdd").click(function () {
+                $.validator.setDefaults({
+                    submitHandler: function () {
+                        var adddata = new FormData();
+                        var form_data = $("#PortfolioAddForm").serializeArray();
+                        $.each(form_data, function (key, input) {
+                            adddata.append(input.name, input.value);
+                        });
+                        adddata.append("PortfolioImageUrl", $("#PortfolioImageUrl")[0].files[0]);
+                        $.ajax({
+                            type: "POST",
+                            url: "/Admin/Portfolio/PortfolioAdd/",
+                            data: adddata,
+                            processData: false,
+                            contentType: false,
+                            dataType: "json",
+                            success: function () {
+                                $('#portfolio-add').modal('hide')
+                                toastr.success('Ekleme İşlemi Başarılı.')
+                                setInterval(function () {
+                                    location.reload();
+                                }, 1500);
+                            }
+                        });
+                    }
+                });
+                $('#PortfolioAddForm').validate({
+                    rules: {
+                        PortfolioHeader: {
+                            required: true,
+                            normalizer: function (value) {
+                                return $.trim(value);
+                            }
+                        },
+                        PortfolioContent: {
+                            required: true,
+                            normalizer: function (value) {
+                                return $.trim(value);
+                            }
+                        },
+                        PortfolioImageUrl: {
+                            required: true,
+                            extension: "png|jpg|jpeg",
+                        },
+                        PortfolioFilter: {
+                            required: true,
+                            normalizer: function (value) {
+                                return $.trim(value);
+                            }
+                        },
+                        PortfolioPrice: {
+                            required: true,
+                            number: true,
+                        },
+                        PortfolioStatus: {
+                            required: true,
+                            normalizer: function (value) {
+                                return $.trim(value);
+                            }
+                        },
+                        PortfolioValue: {
+                            required: true,
+                            number: true,
+                        },
+                        PortfolioDate: {
+                            required: true,
+                            normalizer: function (value) {
+                                return $.trim(value);
+                            }
+                        },
+                    },
+                    messages: {
+                        PortfolioHeader: {
+                            required: "Lütfen boş bırakmayınız."
+                        },
+                        PortfolioContent: {
+                            required: "Lütfen boş bırakmayınız."
+                        },
+                        PortfolioImageUrl: {
+                            required: "Lütfen boş bırakmayınız.",
+                            accept: "Lütfen .png .jpg .jpeg formatında dosya seçiniz."
+                        },
+                        PortfolioFilter: {
+                            required: "Lütfen boş bırakmayınız."
+                        },
+                        PortfolioPrice: {
+                            required: "Lütfen boş bırakmayınız.",
+                            number: "Lütfen Sayı giriniz.",
+                            min: "En Az 0 Referans Fiyat Giriniz.",
+                            max: "En Fazla 99999 Referans Fiyat Giriniz."
+                        },
+                        PortfolioStatus: {
+                            required: "Lütfen boş bırakmayınız."
+                        },
+                        PortfolioValue: {
+                            required: "Lütfen boş bırakmayınız.",
+                            number: "Lütfen Sayı giriniz.",
+                            min: "En Az 0 Referans Oranı Giriniz.",
+                            max: "En Fazla 100 Referans Oranı Giriniz."
+                        },
+                        PortfolioDate: {
+                            required: "Lütfen boş bırakmayınız."
+                        },
+                    },
+                    errorElement: 'span',
+                    errorPlacement: function (error, element) {
+                        error.addClass('invalid-feedback');
+                        element.closest('.form-group').append(error);
+                    },
+                    highlight: function (element, errorClass, validClass) {
+                        $(element).addClass('is-invalid');
+                    },
+                    unhighlight: function (element, errorClass, validClass) {
+                        $(element).removeClass('is-invalid');
+                    }
+                });
+            });
+
+            //PORTFOLİO UPDATE
+            $(document).on("click", ".PortfolioUpdate", function () {
+                var id = $(this).attr("data-id");
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/Portfolio/PortfolioGetItem/" + id,
+                    dataType: "json",
+                    success: function (portfolio) {
+                        var obj = jQuery.parseJSON(portfolio);
+                        console.log(obj);
+                        $("#UpdatePortfolioID").val(obj.PortfolioID);
+                        $("#UpdatePortfolioHeader").val(obj.PortfolioHeader);
+                        $("#UpdatePortfolioContent").val(obj.PortfolioContent);
+                        $("#UpdatePortfolioFilter").val(obj.PortfolioFilter);
+                        $("#UpdatePortfolioPrice").val(obj.PortfolioPrice);
+                        if (obj.PortfolioStatus == true) {
+                            $("#UpdatePortfolioStatus").val("true");
+                        } else if (obj.PortfolioStatus == false) {
+                            $("#UpdatePortfolioStatus").val("false");
+                        }
+                        $("#UpdatePortfolioValue").val(obj.PortfolioValue);
+                        $("#UpdatePortfolioDate").val(obj.PortfolioDate);
+                    }
+                });
+            });
+            $("#PortfolioUpdate").click(function () {
+                $.validator.setDefaults({
+                    submitHandler: function () {
+                        var updatedata = new FormData();
+                        var form_data = $("#PortfolioUpdateForm").serializeArray();
+                        $.each(form_data, function (key, input) {
+                            updatedata.append(input.name, input.value);
+                        });
+                        updatedata.append("PortfolioImageUrl", $("#UpdatePortfolioImageUrl")[0].files[0]);
+                        $.ajax({
+                            type: "POST",
+                            url: "/Admin/Portfolio/PortfolioUpdate/",
+                            data: updatedata,
+                            processData: false,
+                            contentType: false,
+                            dataType: "json",
+                            success: function () {
+                                $('#portfolio-update').modal('hide')
+                                toastr.success('Güncelleme İşlemi Başarılı.')
+                                setInterval(function () {
+                                    location.reload();
+                                }, 1500);
+                            }
+                        });
+                    }
+                });
+                $('#PortfolioUpdateForm').validate({
+                    rules: {
+                        PortfolioHeader: {
+                            required: true,
+                            normalizer: function (value) {
+                                return $.trim(value);
+                            }
+                        },
+                        PortfolioContent: {
+                            required: true,
+                            normalizer: function (value) {
+                                return $.trim(value);
+                            }
+                        },
+                        PortfolioFilter: {
+                            required: true,
+                            normalizer: function (value) {
+                                return $.trim(value);
+                            }
+                        },
+                        PortfolioPrice: {
+                            required: true,
+                            number: true,
+                        },
+                        PortfolioStatus: {
+                            required: true,
+                            normalizer: function (value) {
+                                return $.trim(value);
+                            }
+                        },
+                        PortfolioValue: {
+                            required: true,
+                            number: true,
+                        },
+                        PortfolioDate: {
+                            required: true,
+                            normalizer: function (value) {
+                                return $.trim(value);
+                            }
+                        },
+                    },
+                    messages: {
+                        PortfolioHeader: {
+                            required: "Lütfen boş bırakmayınız."
+                        },
+                        PortfolioContent: {
+                            required: "Lütfen boş bırakmayınız."
+                        },
+                        PortfolioFilter: {
+                            required: "Lütfen boş bırakmayınız."
+                        },
+                        PortfolioPrice: {
+                            required: "Lütfen boş bırakmayınız.",
+                            number: "Lütfen Sayı giriniz.",
+                            min: "En Az 0 Referans Fiyat Giriniz.",
+                            max: "En Fazla 99999 Referans Fiyat Giriniz."
+                        },
+                        PortfolioStatus: {
+                            required: "Lütfen boş bırakmayınız."
+                        },
+                        PortfolioValue: {
+                            required: "Lütfen boş bırakmayınız.",
+                            number: "Lütfen Sayı giriniz.",
+                            min: "En Az 0 Referans Oranı Giriniz.",
+                            max: "En Fazla 100 Referans Oranı Giriniz."
+                        },
+                        PortfolioDate: {
+                            required: "Lütfen boş bırakmayınız."
+                        },
+                    },
+                    errorElement: 'span',
+                    errorPlacement: function (error, element) {
+                        error.addClass('invalid-feedback');
+                        element.closest('.form-group').append(error);
+                    },
+                    highlight: function (element, errorClass, validClass) {
+                        $(element).addClass('is-invalid');
+                    },
+                    unhighlight: function (element, errorClass, validClass) {
+                        $(element).removeClass('is-invalid');
+                    }
+                });
+            });
+
+        });
+    </script>
+}

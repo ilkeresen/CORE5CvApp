@@ -1,0 +1,297 @@
+﻿@using EntityLayer.Concrete
+@model List<WriterUser>
+@{
+    ViewData["Title"] = "WriterProcess";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Main content -->
+<section class="content">
+
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Yazar Listesi Tablosu</h3>
+
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Küçült">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Kapat">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <table id="dttable" class="table table-striped table-valign-middle">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Ad - Soyad</th>
+                        <th>E-Posta</th>
+                        <th>Telefon</th>
+                        <th class="text-right">İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int i = 0; }
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@(++i)</td>
+                            <td>
+                                <img src="~/userimage/@item.ImageUrl" alt="@item.Name @item.Surname" class="img-circle img-size-32 mr-2">
+                                @item.Name @item.Surname
+                            </td>
+                            <td>@item.Email</td>
+                            <td>@item.PhoneNumber</td>
+                            <td class="text-right">
+                                <a href="/Admin/Writer/Profile/@item.Id" class="btn btn-outline-success ServiceDetail">
+                                    <i class="fas fa-eye"></i>
+                                    Görüntüle
+                                </a>
+                                <button type="button" class="btn btn-outline-info WriterUpdate" id="@item.Id" data-id="@item.Id" data-toggle="modal" data-target="#writer-update">
+                                    <i class="fas fa-edit"></i>
+                                    Güncelle
+                                </button>
+                                <button type="button" class="btn btn-outline-danger WriterDelete" id="@item.Id" data-id="@item.Id" data-toggle="modal" data-target="#writer-delete">
+                                    <i class="fas fa-trash"></i>
+                                    Sil
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>#</th>
+                        <th>Ad - Soyad</th>
+                        <th>E-Posta</th>
+                        <th>Telefon</th>
+                        <th class="text-right">İşlemler</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+
+</section>
+<!-- /.content -->
+<!-- UPDATE MODAL -->
+<div class="modal fade" id="writer-update" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-info">
+                <h4 class="modal-title"><i class="fas fa-edit"></i> Yazar Güncelle</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <form role="form" id="WriterUpdateForm">
+                <div class="modal-body">
+                    <input type="hidden" id="UpdateId" name="Id" />
+                    <div class="form-group">
+                        <label for="UserName">Yazar Kullanıcı Ad</label>
+                        <input class="form-control" type="text" id="UpdateUserName" name="UserName" />
+                    </div>
+                    <div class="form-group">
+                        <label for="inputName">Yazar Şifre</label>
+                        <div class="input-group">
+                            <input type="password" name="Password" id="UpdatePassword" class="form-control" placeholder="Şifreniz">
+                            <a class="input-group-append" onclick="passwordFunction()">
+                                <div class="input-group-text">
+                                    <span id="eye" class="fas fa-eye-slash"></span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputName">Yazar Şifre Tekrar</label>
+                        <div class="input-group">
+                            <input type="password" name="ComfirmPassword" id="UpdateConfirmPassword" class="form-control" placeholder="Şifre Tekrarı">
+                            <a class="input-group-append" onclick="comfirmpasswordFunction()">
+                                <div class="input-group-text">
+                                    <span id="ceye" class="fas fa-eye-slash"></span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Vazgeç</button>
+                    <button type="submit" class="btn btn-info" id="WriterUpdate">Yazar Güncelle</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- DELETE MODAL -->
+<div class="modal fade" id="writer-delete" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h4 class="modal-title"><i class="fas fa-trash"></i> Emin Misin?</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <strong>Seçtiğiniz Yazar silinecektir.</strong>
+                <input type="hidden" name="Id" id="Id" />
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Vazgeç</button>
+                <input type="button" id="WriterDelete" class="btn btn-danger" value="Yazar Sil" />
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+
+        $(function () {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+
+            //SKİLL DELETE
+            $(document).on("click", ".WriterDelete", function () {
+                var id = $(this).attr("data-id");
+                $("#Id").val(id);
+            });
+
+            $("#WriterDelete").click(function () {
+                var id = $("#Id").val();
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/Writer/WriterDelete/",
+                    data: { "id": id },
+                    dataType: "json",
+                    success: function () {
+                        $('#writer-delete').modal('hide')
+                        toastr.success('Silme İşlemi Başarılı.')
+                        setInterval(function () {
+                            location.reload();
+                        }, 1500);
+                    }
+                });
+            });
+
+            //SKİLL UPDATE
+            $(document).on("click", ".WriterUpdate", function () {
+                var id = $(this).attr("data-id");
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/Writer/WriterGetItem/" + id,
+                    dataType: "json",
+                    success: function (user) {
+                        var obj = jQuery.parseJSON(user);
+                        $("#UpdateId").val(obj.Id);
+                        $("#UpdateUserName").val(obj.UserName);
+                    }
+                });
+            });
+            $("#WriterUpdate").click(function () {
+                $.validator.setDefaults({
+                    submitHandler: function () {
+                        var updatedata = $("#WriterUpdateForm").serialize();
+                        $.ajax({
+                            type: "POST",
+                            url: "/Admin/Writer/WriterUpdate/",
+                            data: updatedata,
+                            dataType: "json",
+                            success: function () {
+                                $('#writer-update').modal('hide')
+                                toastr.success('Güncelleme İşlemi Başarılı.')
+                                setInterval(function () {
+                                    location.reload();
+                                }, 1500);
+                            }
+                        });
+                    }
+                });
+                $('#WriterUpdateForm').validate({
+                    rules: {
+                        UserName: {
+                            required: true,
+                            normalizer: function (value) {
+                                return $.trim(value);
+                            }
+                        },
+                        Password: {
+                            required: true,
+                            normalizer: function (value) {
+                                return $.trim(value);
+                            }
+                        },
+                        ComfirmPassword: {
+                            required: true,
+                            normalizer: function (value) {
+                                return $.trim(value);
+                            },
+                            equalTo: "#UpdatePassword"
+                        },
+                    },
+                    messages: {
+                        UserName: {
+                            required: "Lütfen boş bırakmayınız."
+                        },
+                        Password: {
+                            required: "Lütfen boş bırakmayınız."
+                        },
+                        ComfirmPassword: {
+                            required: "Lütfen boş bırakmayınız.",
+                            equalTo: "Şifreler eşleşmiyor tekrar deneyiniz."
+                        },
+                    },
+                    errorElement: 'span',
+                    errorPlacement: function (error, element) {
+                        error.addClass('invalid-feedback');
+                        element.closest('.form-group').append(error);
+                    },
+                    highlight: function (element, errorClass, validClass) {
+                        $(element).addClass('is-invalid');
+                    },
+                    unhighlight: function (element, errorClass, validClass) {
+                        $(element).removeClass('is-invalid');
+                    }
+                });
+            });
+
+        });
+
+
+        function passwordFunction() {
+            var x = document.getElementById("UpdatePassword");
+            if (x.type === "password") {
+                x.type = "text";
+                $('#eye').removeClass("fas fa-eye-slash");
+                $('#eye').addClass("fas fa-eye");
+            } else {
+                $('#eye').removeClass("fas fa-eye");
+                $('#eye').addClass("fas fa-eye-slash");
+                x.type = "password";
+            }
+        }
+        function comfirmpasswordFunction() {
+            var x = document.getElementById("UpdateConfirmPassword");
+            if (x.type === "password") {
+                x.type = "text";
+                $('#ceye').removeClass("fas fa-eye-slash");
+                $('#ceye').addClass("fas fa-eye");
+            } else {
+                $('#ceye').removeClass("fas fa-eye");
+                $('#ceye').addClass("fas fa-eye-slash");
+                x.type = "password";
+            }
+        }
+    </script>
+}

@@ -1,0 +1,21 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<form id="ContactMessageAddForm" class="php-email-form mt-4"> @* action="ShowCase/ContactMessage/" *@
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <input type="text" name="ContactMessageName" class="form-control" placeholder="Adınız" required>
+        </div>
+        <div class="col-md-6 form-group mt-3 mt-md-0">
+            <input type="email" class="form-control" name="ContactMessageMail" placeholder="E-Posta Adresiniz" required>
+        </div>
+    </div>
+    <div class="form-group mt-3">
+        <input type="text" class="form-control" name="ContactMessageSubject" placeholder="Konu" required>
+    </div>
+    <div class="form-group mt-3">
+        <textarea class="form-control" style="resize:none;" name="ContactMessageContent" rows="5" placeholder="Mesajınız" required></textarea>
+    </div>
+    <div class="text-center"><button id="ContactMessageAdd" type="submit">Mesaj Gönder</button></div>
+</form>

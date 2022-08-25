@@ -1,0 +1,217 @@
+﻿@model Core5BlogApp.Areas.Writer.Models.UserRegisterViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>.NET CORE 5 | Kayıt Ol</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" type="image/png" href="~/images/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="~/images/icons/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="~/images/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="~/images/icons/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="~/images/icons/android-chrome-512x512.png">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/Admin/plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="~/Admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/Admin/dist/css/adminlte.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <style>
+        .mt-7 {
+            margin-top: 6rem !important;
+        }
+    </style>
+</head>
+<body class="hold-transition register-page">
+    <div class="register-box mt-7">
+        <div class="register-logo">
+            <a href="/ShowCase/ShowCase/Index/"><b>.NET CORE 5 </b> KAYIT OL</a>
+        </div>
+
+        <div class="card">
+            <div class="card-body register-card-body">
+                <p class="login-box-msg">Kayıt olmak için aşağıdaki formu doldurun.</p>
+
+                <form method="post">
+                    <div class="input-group">
+                        <input asp-for="Name" type="text" class="form-control" placeholder="Adınız">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-user"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-2">
+                        <span asp-validation-for="Name" class="text-danger fw-bold"></span>
+                    </div>
+                    <div class="input-group">
+                        <input asp-for="Surname" type="text" class="form-control" placeholder="Soyadınız">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-user"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-2">
+                        <span asp-validation-for="Surname" class="text-danger fw-bold"></span>
+                    </div>
+                    <div class="input-group">
+                        <input asp-for="UserName" type="text" class="form-control" placeholder="Kullanıcı Adınız">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-user"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-2">
+                        <span asp-validation-for="UserName" class="text-danger fw-bold"></span>
+                    </div>
+                    <div class="input-group">
+                        <input asp-for="ImageUrl" type="text" class="form-control" placeholder="Resminiz">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-image"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-2">
+                        <span asp-validation-for="ImageUrl" class="text-danger fw-bold"></span>
+                    </div>
+                    @*<div class="input-group"> RESİM YÜKLEME YAPINCA AÇ ...
+                            <div class="custom-file">
+                                <input asp-for="ImageUrl" type="file" class="custom-file-input" id="ImageUrl">
+                                <label class="custom-file-label" for="ImageUrl" data-browse="Resim Seç">Resminiz</label>
+                            </div>
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-image"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group mb-2">
+                            <span asp-validation-for="ImageUrl" class="text-danger fw-bold"></span>
+                        </div>*@
+                    <div class="input-group">
+                        <input asp-for="Mail" type="email" class="form-control" placeholder="E-Posta Adresiniz">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-2">
+                        <span asp-validation-for="Mail" class="text-danger fw-bold"></span>
+                    </div>
+                    @*<div class="input-group">
+                            <input asp-for="Password" type="password" class="form-control" placeholder="Şifreniz">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-lock"></span>
+                                </div>
+                            </div>
+                        </div>*@
+                    <div class="input-group">
+                        <input asp-for="Password" type="password" class="form-control" placeholder="Şifreniz">
+                        <a class="input-group-append" onclick="passwordFunction()">
+                            <div class="input-group-text">
+                                <span id="eye" class="fas fa-eye-slash"></span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="input-group mb-2">
+                        <span asp-validation-for="Password" class="text-danger fw-bold"></span>
+                    </div>
+                    <div class="input-group">
+                        <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Şifre Tekrarı">
+                        <a class="input-group-append" onclick="comfirmpasswordFunction()">
+                            <div class="input-group-text">
+                                <span id="ceye" class="fas fa-eye-slash"></span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="input-group mb-2">
+                        <span asp-validation-for="ConfirmPassword" class="text-danger fw-bold"></span>
+                    </div>
+                    <div class="text-danger" asp-validation-summary="ModelOnly">
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="icheck-primary">
+                                <input type="checkbox" id="agreeTerms" name="terms">
+                                <label for="agreeTerms">
+                                    Okudum <a href="#">onaylıyorum.</a>
+                                </label>
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-4">
+                            <button type="submit" class="btn btn-dark btn-block">Kayıt Ol</button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </form>
+
+                <div class="social-auth-links text-center">
+                    <p>- VEYA -</p>
+                    <a href="#" class="btn btn-block btn-primary">
+                        <i class="fab fa-facebook mr-2"></i>
+                        Facebook'u kullanarak kaydolun
+                    </a>
+                    <a href="#" class="btn btn-block btn-danger">
+                        <i class="fab fa-google-plus mr-2"></i>
+                        Google+'yı kullanarak kaydolun
+                    </a>
+                </div>
+
+                <a href="/Writer/Login/Index/" class="text-center">Zaten Üyeliğim Var.</a>
+            </div>
+            <!-- /.form-box -->
+        </div><!-- /.card -->
+    </div>
+    <!-- /.register-box -->
+    <!-- jQuery -->
+    <script src="~/Admin/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="~/Admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/Admin/dist/js/adminlte.min.js"></script>
+    <script>
+        function passwordFunction() {
+            var x = document.getElementById("Password");
+            if (x.type === "password") {
+                x.type = "text";
+                $('#eye').removeClass("fas fa-eye-slash");
+                $('#eye').addClass("fas fa-eye");
+            } else {
+                $('#eye').removeClass("fas fa-eye");
+                $('#eye').addClass("fas fa-eye-slash");
+                x.type = "password";
+            }
+        }
+        function comfirmpasswordFunction() {
+            var y = document.getElementById("ConfirmPassword");
+            if (y.type === "password") {
+                y.type = "text";
+                $('#ceye').removeClass("fas fa-eye-slash");
+                $('#ceye').addClass("fas fa-eye");
+            } else {
+                $('#ceye').removeClass("fas fa-eye");
+                $('#ceye').addClass("fas fa-eye-slash");
+                y.type = "password";
+            }
+        }
+    </script>
+</body>
+</html>
+

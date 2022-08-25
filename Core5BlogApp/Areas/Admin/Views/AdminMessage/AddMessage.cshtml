@@ -1,0 +1,81 @@
+﻿@model EntityLayer.Concrete.WriterMessage
+@{
+    ViewData["Title"] = "AddMessage";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-3">
+            <a href="/Admin/AdminMessage/AddMessage/" class="btn btn-dark btn-block mb-3">Yeni Mesaj Gönder</a>
+
+            <!-- WriterMessageFolders row -->
+            @await Component.InvokeAsync("AdminMessageFolders")
+            <!-- /.WriterMessageFolders row -->
+            <!-- WriterMessageLabels row -->
+            @await Component.InvokeAsync("AdminMessageLabels")
+            <!-- /.WriterMessageLabels row -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-9">
+            <div class="card card-dark card-outline">
+                <div class="card-header">
+                    <h3 class="card-title">Yeni Mesaj Oluştur</h3>
+                </div>
+                <!-- /.card-header -->
+                <form method="post">
+                    <div class="card-body">
+
+                        <div class="form-group">
+                            <input class="form-control" name="Receiver" placeholder="Kime:">
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" name="Subject" placeholder="Konu:">
+                        </div>
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label>Aşağıdan etiket seçebilirsiniz.</label>
+                            </div>
+                            <div class="form-group clearfix">
+                                <div class="icheck-danger d-inline">
+                                    <input type="radio" name="Label" value="Important" id="Important">
+                                    <label for="Important">
+                                        Önemli
+                                    </label>
+                                </div>
+                                <div class="icheck-warning d-inline ml-2">
+                                    <input type="radio" name="Label" value="Promotions" id="Promotions">
+                                    <label for="Promotions">
+                                        Promosyon
+                                    </label>
+                                </div>
+                                <div class="icheck-primary d-inline ml-2">
+                                    <input type="radio" name="Label" value="Social" id="Social">
+                                    <label for="Social">
+                                        Sosyal
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="compose-textarea" name="MessageContent" class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer">
+                        <div class="float-right">
+                            <button type="submit" class="btn btn-dark"><i class="far fa-envelope"></i> Gönder</button>
+                        </div>
+                        <a href="/Admin/AdminMessage/ReceiverMessage/" class="btn btn-default"><i class="fas fa-times"></i> Vazgeç</a>
+                    </div>
+                </form>
+                <!-- /.card-footer -->
+            </div>
+            <!-- /.card -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+<!-- /.content -->

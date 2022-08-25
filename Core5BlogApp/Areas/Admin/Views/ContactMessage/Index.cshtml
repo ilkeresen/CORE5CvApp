@@ -1,0 +1,320 @@
+﻿@using EntityLayer.Concrete
+@model List<ContactMessage>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Main content -->
+<section class="content">
+
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">İletişim Mesaj Listesi Tablosu</h3>
+
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Küçült">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Kapat">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <table id="dttable" class="table table-striped projects">
+                <thead>
+                    <tr>
+                        <th>
+                            #
+                        </th>
+                        <th>
+                            İletişim Mesaj Gönderen
+                        </th>
+                        <th>
+                            İletişim Mesaj Mail
+                        </th>
+                        <th>
+                            İletişim Mesaj Tarih
+                        </th>
+                        <th class="text-right">
+                            İletişim Mesaj İşlemleri
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int i = 0; }
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @(++i)
+                            </td>
+                            <td>
+                                @item.ContactMessageName
+                            </td>
+                            <td>
+                                @item.ContactMessageMail
+                            </td>
+                            <td>
+                                @(((DateTime)item.ContactMessageDate).ToString("dd.MM.yyyy"))
+                            </td>
+                            <td class="project-actions text-right">
+                                @if (item.ContactMessageApproval == false)
+                                {
+                                    <button type="button" class="btn btn-outline-success ContactMessageDetail" id="@item.ContactMessageID" data-id="@item.ContactMessageID" data-toggle="modal" data-target="#contactmessage-detail">
+                                        <i class="fas fa-eye"></i>
+                                        Oku
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button type="button" class="btn btn-outline-info ContactMessageDetailO" id="@item.ContactMessageID" data-id="@item.ContactMessageID" data-toggle="modal" data-target="#contactmessage-detailo">
+                                        <i class="fas fa-eye"></i>
+                                        Tekrar Oku
+                                    </button>
+                                }
+                                <button type="button" class="btn btn-outline-danger ContactMessageDelete" id="@item.ContactMessageID" data-id="@item.ContactMessageID" data-toggle="modal" data-target="#contactmessage-delete">
+                                    <i class="fas fa-trash"></i>
+                                    Sil
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>
+                            #
+                        </th>
+                        <th>
+                            İletişim Mesaj Gönderen
+                        </th>
+                        <th>
+                            İletişim Mesaj Mail
+                        </th>
+                        <th>
+                            İletişim Mesaj Tarih
+                        </th>
+                        <th class="text-right">
+                            İletişim Mesaj İşlemleri
+                        </th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+
+</section>
+<!-- /.content -->
+<!-- DETAİL MODAL -->
+<div class="modal fade" id="contactmessage-detail" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-success">
+                <h4 class="modal-title"><i class="fas fa-eye"></i> İletişim Mesaj Görüntüle</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex justify-content-center">
+                    <div class="col-md-10">
+                        <input type="hidden" name="ContactMessageID" id="ContactMessageID" />
+                        <div class="card card-widget widget-user shadow-lg rounded">
+                            <div class="widget-user-header bg-success">
+                                <h4 class="widget-user-username" style="font-weight:bold;" id="ContactMessageName">İlker Esen</h4>
+                                <h4 class="widget-user-username" style="font-weight:bold;" id="ContactMessageMail">deneme@gmail.com</h4>
+                                <h4 class="widget-user-username" style="font-weight:bold;" id="ContactMessageDate">2022-08-16</h4>
+                            </div>
+                            <div class="card-footer" style="padding:30px;text-align:center;">
+                                <div class="row" id="ContactMessageSubject" style="font-weight:bold;">
+                                    İçerik test mesajı konu
+                                </div>
+                                <div class="row" id="ContactMessageContent">
+                                    İçerik test mesajı
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>
+                <input type="button" id="ContactMessageApproval" class="btn btn-success" value="Mesajı Okundu İşaretle" />
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- DETAİLO MODAL -->
+<div class="modal fade" id="contactmessage-detailo" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-info">
+                <h4 class="modal-title"><i class="fas fa-eye"></i> İletişim Mesaj Görüntüle</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex justify-content-center">
+                    <div class="col-md-10">
+                        <div class="card card-widget widget-user shadow-lg rounded">
+                            <div class="widget-user-header bg-info">
+                                <h4 class="widget-user-username" style="font-weight:bold;" id="ContactMessageNameO"></h4>
+                                <h4 class="widget-user-username" style="font-weight:bold;" id="ContactMessageMailO"></h4>
+                                <h4 class="widget-user-username" style="font-weight:bold;" id="ContactMessageDateO"></h4>
+                            </div>
+                            <div class="card-footer" style="padding:30px;text-align:center;">
+                                <div class="row" id="ContactMessageSubjectO" style="font-weight:bold;">
+                                </div>
+                                <div class="row" id="ContactMessageContentO">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- DELETE MODAL -->
+<div class="modal fade" id="contactmessage-delete" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h4 class="modal-title"><i class="fas fa-trash"></i> Emin Misin?</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <strong>Seçtiğiniz İletişim Mesajı Silinecektir.</strong>
+                <input type="hidden" name="ContactMessageID" id="ContactMessageID" />
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Vazgeç</button>
+                <input type="button" id="ContactMessageDelete" class="btn btn-danger" value="İletişim Mesajı Sil" />
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+{
+    <script>
+
+        $(function () {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+
+            //CONTACTMESSAGE DELETE
+            $(document).on("click", ".ContactMessageDelete", function () {
+                var id = $(this).attr("data-id");
+                $("#ContactMessageID").val(id);
+            });
+
+            $("#ContactMessageDelete").click(function () {
+                var id = $("#ContactMessageID").val();
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/ContactMessage/ContactMessageDelete/",
+                    data: { "id": id },
+                    dataType: "json",
+                    success: function () {
+                        $('#contactmessage-delete').modal('hide')
+                        toastr.success('Silme İşlemi Başarılı.')
+                        setInterval(function () {
+                            location.reload();
+                        }, 1500);
+                    }
+                });
+            });
+
+            //CONTACTMESSAGE DETAİLO
+            $(document).on("click", ".ContactMessageDetailO", function () {
+                var id = $(this).attr("data-id");
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/ContactMessage/ContactMessageGetItem/" + id,
+                    dataType: "json",
+                    success: function (contactMessage) {
+                        var obj = jQuery.parseJSON(contactMessage);
+                        var date = new Date(obj.ContactMessageDate);
+                        var dateN = date.getDate() + "." + (date.getMonth() + 1) + "." + date.getFullYear()
+                        $("#ContactMessageNameO").empty();
+                        $("#ContactMessageMailO").empty();
+                        $("#ContactMessageSubjectO").empty();
+                        $("#ContactMessageContentO").empty();
+                        $("#ContactMessageDateO").empty();
+                        $("#ContactMessageNameO").append(obj.ContactMessageName);
+                        $("#ContactMessageMailO").append(obj.ContactMessageMail);
+                        $("#ContactMessageSubjectO").append(obj.ContactMessageSubject);
+                        $("#ContactMessageContentO").append(obj.ContactMessageContent);
+                        $("#ContactMessageDateO").append(dateN);
+                    }
+                });
+            });
+
+            //CONTACTMESSAGE DETAİL
+            $(document).on("click", ".ContactMessageDetail", function () {
+                var id = $(this).attr("data-id");
+                $("#ContactMessageID").val(id);
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/ContactMessage/ContactMessageGetItem/" + id,
+                    dataType: "json",
+                    success: function (contactMessage) {
+                        var obj = jQuery.parseJSON(contactMessage);
+                        var date = new Date(obj.ContactMessageDate);
+                        var dateN = date.getDate() + "." + (date.getMonth() + 1) + "." + date.getFullYear()
+                        $("#ContactMessageID").empty();
+                        $("#ContactMessageName").empty();
+                        $("#ContactMessageMail").empty();
+                        $("#ContactMessageSubject").empty();
+                        $("#ContactMessageContent").empty();
+                        $("#ContactMessageDate").empty();
+                        $("#ContactMessageID").append(obj.ContactMessageID);
+                        $("#ContactMessageName").append(obj.ContactMessageName);
+                        $("#ContactMessageMail").append(obj.ContactMessageMail);
+                        $("#ContactMessageSubject").append(obj.ContactMessageSubject);
+                        $("#ContactMessageContent").append(obj.ContactMessageContent);
+                        $("#ContactMessageDate").append(dateN);
+                    }
+                });
+            });
+            $("#ContactMessageApproval").click(function () {
+                var updatedata = $("#ContactMessageID").val();
+                console.log(updatedata);
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/ContactMessage/ContactMessageUpdate/" + updatedata,
+                    dataType: "json",
+                    success: function () {
+                        $('#contactmessage-detail').modal('hide')
+                        toastr.success('Mesaj Okuma İşlemi Başarılı.')
+                        setInterval(function () {
+                            location.reload();
+                        }, 1500);
+                    }
+                });
+            });
+
+        });
+    </script>
+}

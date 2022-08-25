@@ -1,0 +1,15 @@
+C:\Users\İlker ESEN\Source\Repos\Core5BlogApp\EntityLayer\bin\Debug\net5.0\EntityLayer.deps.json
+C:\Users\İlker ESEN\Source\Repos\Core5BlogApp\EntityLayer\bin\Debug\net5.0\EntityLayer.runtimeconfig.json
+C:\Users\İlker ESEN\Source\Repos\Core5BlogApp\EntityLayer\bin\Debug\net5.0\EntityLayer.runtimeconfig.dev.json
+C:\Users\İlker ESEN\Source\Repos\Core5BlogApp\EntityLayer\bin\Debug\net5.0\EntityLayer.dll
+C:\Users\İlker ESEN\Source\Repos\Core5BlogApp\EntityLayer\bin\Debug\net5.0\ref\EntityLayer.dll
+C:\Users\İlker ESEN\Source\Repos\Core5BlogApp\EntityLayer\bin\Debug\net5.0\EntityLayer.pdb
+C:\Users\İlker ESEN\Source\Repos\Core5BlogApp\EntityLayer\obj\Debug\net5.0\EntityLayer.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\İlker ESEN\Source\Repos\Core5BlogApp\EntityLayer\obj\Debug\net5.0\EntityLayer.AssemblyInfoInputs.cache
+C:\Users\İlker ESEN\Source\Repos\Core5BlogApp\EntityLayer\obj\Debug\net5.0\EntityLayer.AssemblyInfo.cs
+C:\Users\İlker ESEN\Source\Repos\Core5BlogApp\EntityLayer\obj\Debug\net5.0\EntityLayer.csproj.CoreCompileInputs.cache
+C:\Users\İlker ESEN\Source\Repos\Core5BlogApp\EntityLayer\obj\Debug\net5.0\EntityLayer.dll
+C:\Users\İlker ESEN\Source\Repos\Core5BlogApp\EntityLayer\obj\Debug\net5.0\ref\EntityLayer.dll
+C:\Users\İlker ESEN\Source\Repos\Core5BlogApp\EntityLayer\obj\Debug\net5.0\EntityLayer.pdb
+C:\Users\İlker ESEN\Source\Repos\Core5BlogApp\EntityLayer\obj\Debug\net5.0\EntityLayer.genruntimeconfig.cache
+C:\Users\İlker ESEN\Source\Repos\Core5BlogApp\EntityLayer\obj\Debug\net5.0\EntityLayer.csproj.AssemblyReference.cache

@@ -1,0 +1,23 @@
+﻿@using EntityLayer.Concrete
+@model List<Interest>
+
+
+<div class="interests container">
+
+    <div class="section-title">
+        <h2>İlgi Alanlarım</h2>
+    </div>
+    <div class="row">
+
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-3 col-md-4 mt-4">
+                <div class="icon-box">
+                    <i class="@item.InterestIcon" style="color: @item.InterestColor"></i>
+                    <h3>@item.InterestName</h3>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>

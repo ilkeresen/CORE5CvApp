@@ -1,0 +1,22 @@
+﻿@using EntityLayer.Concrete
+@model List<Announcement>
+<!-- Notifications Dropdown Menu -->
+<li class="nav-item dropdown">
+    <a class="nav-link" data-toggle="dropdown" href="#">
+        <i class="far fa-bell"></i>
+        <span class="badge badge-danger navbar-badge" style="font-size: .7rem !important;">@ViewBag.Count</span>
+    </a>
+    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+        <span class="dropdown-item dropdown-header">@ViewBag.Count Adet Bildirim</span>
+        @foreach (var item in Model)
+        {
+            <div class="dropdown-divider"></div>
+            <a href="/Admin/Announcement/Index/" class="dropdown-item">
+                <i class="fas fa-envelope mr-2"></i> @item.Title
+                <span class="float-right text-muted text-sm">@(((DateTime)item.Date).ToString("dd-MM-yyyy"))</span>
+            </a>
+        }
+        <div class="dropdown-divider"></div>
+        <a href="/Admin/Announcement/Index/" class="dropdown-item dropdown-footer">Tüm Bildirimleri Gör</a>
+    </div>
+</li>

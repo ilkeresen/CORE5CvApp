@@ -1,0 +1,287 @@
+﻿@model EntityLayer.Concrete.About
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Main content -->
+<section class="content">
+
+    <!-- Default box -->
+    <div class="card flex-row flex-wrap">
+        <div class="card-header w-100">
+            <h3 class="card-title">Hakkımda Bilgileri</h3>
+
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Küçült">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Kapat">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card-body border-0">
+                <img class="img-fluid" src="@ViewBag.İmage" alt="">
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <form role="form" id="AboutUpdateForm" enctype="multipart/form-data">
+                    @Html.HiddenFor(x => x.AboutID)
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="AboutHeader">Hakkımda Başlık</label>
+                            @Html.TextBoxFor(x => x.AboutHeader, new { @class = "form-control", @type = "text", @id = "AboutHeader", @name = "AboutHeader" })
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="AboutImageUrl">Hakkımda Resim</label>
+                            <div class="input-group">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" name="AboutImageUrl" id="AboutImageUrl" accept="image/png, image/jpg, image/jpeg">
+                                    <label class="custom-file-label" for="AboutImageUrl">Dosya Seçiniz (.png|.jpg|.jpeg)</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="AboutFirstContent">Hakkımda İlk Paragraf</label>
+                        @Html.TextAreaFor(x => x.AboutFirstContent, new { @style = "resize:none;", @class = "form-control", @rows = "4", @id = "AboutFirstContent", @name = "AboutFirstContent" })
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="AboutDate">Hakkımda Doğum Tarihi</label>
+                            @Html.TextBoxFor(x => x.AboutDate, new { @class = "form-control", @type = "date", @id = "AboutDate", @name = "AboutDate" })
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="AboutWebAdress">Hakkımda Web Site</label>
+                            @Html.TextBoxFor(x => x.AboutWebAdress, new { @class = "form-control", @type = "text", @id = "AboutWebAdress", @name = "AboutWebAdress" })
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="AboutPhone">Hakkımda Telefon</label>
+                            @Html.TextBoxFor(x => x.AboutPhone, new { @class = "form-control", @type = "text", @id = "AboutPhone", @name = "AboutPhone" })
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="AboutCity">Hakkımda Ülke/Şehir</label>
+                            @Html.TextBoxFor(x => x.AboutCity, new { @class = "form-control", @type = "text", @id = "AboutCity", @name = "AboutCity" })
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="UpdateAboutAge">Hakkımda Yaş</label>
+                            @Html.TextBoxFor(x => x.AboutAge, new { @class = "form-control", @type = "number", @min="0", @max="99", @id = "AboutAge", @name = "AboutAge" })
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="AboutDegree">Hakkımda Derece</label>
+                            @Html.TextBoxFor(x => x.AboutDegree, new { @class = "form-control", @type = "text", @id = "AboutDegree", @name = "AboutDegree" })
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="AboutMail">Hakkımda E-Posta</label>
+                            @Html.TextBoxFor(x => x.AboutMail, new { @class = "form-control", @type = "email", @id = "AboutMail", @name = "AboutMail" })
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="AboutFreelance">Hakkımda Serbest Çalışan</label>
+                            @Html.TextBoxFor(x => x.AboutFreelance, new { @class = "form-control", @type = "text", @id = "AboutFreelance", @name = "AboutFreelance" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="AboutSecondContent">Hakkımda Son Paragraf</label>
+                        @Html.TextAreaFor(x => x.AboutSecondContent, new { @style = "resize:none;", @class = "form-control", @rows = "4", @id = "AboutSecondContent", @name = "AboutSecondContent" })
+                    </div>
+                    <div class="form-group text-right">
+                        <button type="submit" class="btn btn-outline-dark" id="AboutUpdate">Hakkımda Güncelle</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+
+</section>
+<!-- /.content -->
+
+@section Scripts
+{
+    <script>
+        $(function () {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+            //AboutPhone InputMask
+            $('#AboutPhone').inputmask('0(999)999-9999', { 'placeholder': '0(___)___-____' })
+            bsCustomFileInput.init();
+            //ABOUTCOMPONENT UPDATE
+            $("#AboutUpdate").click(function () {
+                $.validator.setDefaults({
+                    submitHandler: function () {
+                        var data = new FormData();
+                        var form_data = $("#AboutUpdateForm").serializeArray();
+                        //var updatedata = $("#AboutUpdateForm").serializeArray();
+                        //data.append(updatedata);
+                        $.each(form_data, function (key, input) {
+                            data.append(input.name, input.value);
+                        });
+                        data.append("AboutImageUrl", $("#AboutImageUrl")[0].files[0]);
+                        $.ajax({
+                            type: "POST",
+                            url: "/Admin/About/AboutUpdate",
+                            data: data,
+                            processData: false,
+                            contentType: false,
+                            dataType: "json",
+                            success: function () {
+                                $('#aboutcomponent-update').modal('hide')
+                                toastr.success('Güncelleme İşlemi Başarılı.')
+                                setInterval(function () {
+                                    location.reload();
+                                }, 1500);
+                            }
+                        });
+                    }
+                });
+                $('#AboutUpdateForm').validate({
+                    rules: {
+                        AboutHeader: {
+                            required: true,
+                            normalizer: function (value) {
+                                return $.trim(value);
+                            }
+                        },
+                        AboutFirstContent: {
+                            required: true,
+                            normalizer: function (value) {
+                                return $.trim(value);
+                            }
+                        },
+                        AboutCity: {
+                            required: true,
+                            normalizer: function (value) {
+                                return $.trim(value);
+                            }
+                        },
+                        AboutPhone: {
+                            required: true,
+                            normalizer: function (value) {
+                                return $.trim(value);
+                            }
+                        },
+                        AboutAge: {
+                            required: true,
+                            number: true,
+                            normalizer: function (value) {
+                                return $.trim(value);
+                            }
+                        },
+                        AboutDate: {
+                            required: true,
+                            date: true,
+                            normalizer: function (value) {
+                                return $.trim(value);
+                            }
+                        },
+                        AboutWebAdress: {
+                            required: true,
+                            normalizer: function (value) {
+                                return $.trim(value);
+                            }
+                        },
+                        AboutDegree: {
+                            required: true,
+                            normalizer: function (value) {
+                                return $.trim(value);
+                            }
+                        },
+                        AboutFreelance: {
+                            required: true,
+                            normalizer: function (value) {
+                                return $.trim(value);
+                            }
+                        },
+                        AboutSecondContent: {
+                            required: true,
+                            normalizer: function (value) {
+                                return $.trim(value);
+                            }
+                        },
+                        AboutMail: {
+                            required: true,
+                            email: true,
+                            normalizer: function (value) {
+                                return $.trim(value);
+                            }
+                        },
+                        AboutImageUrl: {
+                            required: true,
+                            extension: "png|jpg|jpeg",
+                        },
+                    },
+                    messages: {
+                        AboutHeader: {
+                            required: "Lütfen boş bırakmayınız."
+                        },
+                        AboutFirstContent: {
+                            required: "Lütfen boş bırakmayınız."
+                        },
+                        AboutWebAdress: {
+                            required: "Lütfen boş bırakmayınız."
+                        },
+                        AboutCity: {
+                            required: "Lütfen boş bırakmayınız."
+                        },
+                        AboutPhone: {
+                            required: "Lütfen boş bırakmayınız."
+                        },
+                        AboutDegree: {
+                            required: "Lütfen boş bırakmayınız."
+                        },
+                        AboutFreelance: {
+                            required: "Lütfen boş bırakmayınız."
+                        },
+                        AboutSecondContent: {
+                            required: "Lütfen boş bırakmayınız."
+                        },
+                        AboutAge: {
+                            required: "Lütfen boş bırakmayınız.",
+                            number: "Lütfen Sayı giriniz.",
+                            min: "En Az 0 Hakkımda Yaş değeri Giriniz.",
+                            max: "En Fazla 99 Hakkımda Yaş değeri Giriniz."
+                        },
+                        AboutDate: {
+                            required: "Lütfen boş bırakmayınız.",
+                            date: "Lütfen Tarih Giriniz."
+                        },
+                        AboutMail: {
+                            required: "Lütfen boş bırakmayınız.",
+                            email: "Lütfen mail adresi giriniz."
+                        },
+                        AboutImageUrl: {
+                            required: "Lütfen boş bırakmayınız.",
+                            accept: "Lütfen .png .jpg .jpeg formatında dosya seçiniz."
+                        },
+                    },
+                    errorElement: 'span',
+                    errorPlacement: function (error, element) {
+                        error.addClass('invalid-feedback');
+                        element.closest('.form-group').append(error);
+                    },
+                    highlight: function (element, errorClass, validClass) {
+                        $(element).addClass('is-invalid');
+                    },
+                    unhighlight: function (element, errorClass, validClass) {
+                        $(element).removeClass('is-invalid');
+                    }
+                });
+            });
+
+        });
+    </script>
+}

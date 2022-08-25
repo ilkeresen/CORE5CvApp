@@ -1,0 +1,171 @@
+﻿@using Microsoft.AspNetCore.Http
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="/Admin/Dashboard/Index/" class="brand-link">
+        <img src="~/images/icons/android-chrome-192x192.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+             style="opacity: .8">
+        <span class="brand-text font-weight-light"> .NET CORE 5</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+                <img src="~/userimage/@Context.Session.GetString("ImageUrl")" class="img-circle elevation-2" alt="@Context.Session.GetString("Name") @Context.Session.GetString("Surname")">
+            </div>
+            <div class="info">
+                <a href="/Writer/Profile/Index/" class="d-block">@Context.Session.GetString("Name") @Context.Session.GetString("Surname")</a>
+            </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <!-- Add icons to the links using the .nav-icon class
+    with font-awesome or any other icon font library -->
+                <li class="nav-item">
+                    <a href="/Admin/Dashboard/Index/" class="nav-link @ViewData["DashboardActive"]">
+                        <i class="nav-icon fas fa-home"></i>
+                        <p>
+                            Dashboard
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-header">Mesaj Ayarları</li>
+                <li class="nav-item">
+                    <a href="/Admin/ContactMessage/Index/" class="nav-link @ViewData["ContactMessageActive"]">
+                        <i class="nav-icon far fa-envelope"></i>
+                        <p>
+                            İletişim Mesajları
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/Admin/AdminMessage/ReceiverMessage/" class="nav-link @ViewData["AdminMessageActive"]">
+                        <i class="nav-icon far fa-envelope"></i>
+                        <p>
+                            Yazar Mesajları
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-header">Yazar Ayarları</li>
+                <li class="nav-item">
+                    <a href="/Admin/Writer/Index/" class="nav-link @ViewData["WriterActive"]">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>
+                            Yazar Listesi
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/Admin/Writer/WriterProcess/" class="nav-link @ViewData["WriterProcessActive"]">
+                        <i class="nav-icon fas fa-user-edit"></i>
+                        <p>
+                            Yazar İşlemleri
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/Admin/Announcement/Index/" class="nav-link @ViewData["AnnouncementActive"]">
+                        <i class="nav-icon fas fa-bullhorn"></i>
+                        <p>
+                            Duyurular
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-header">Vitrin Ayarları</li>
+                <li class="nav-item">
+                    <a href="/Admin/Home/Index/" class="nav-link @ViewData["HomeActive"]">
+                        <i class="nav-icon fas fa-store-alt"></i>
+                        <p>
+                            Öne Çıkan
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/Admin/About/Index/" class="nav-link @ViewData["AboutActive"]">
+                        <i class="nav-icon far fa-address-card"></i>
+                        <p>
+                            Hakkımda
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/Admin/AboutComponent/Index/" class="nav-link @ViewData["AboutComponentActive"]">
+                        <i class="nav-icon fas fa-list"></i>
+                        <p>
+                            Hakkımda Bileşenleri
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/Admin/Skill/Index/" class="nav-link @ViewData["SkillActive"]">
+                        <i class="nav-icon fas fa-tasks"></i>
+                        <p>
+                            Yeteneklerim
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/Admin/Interest/Index/" class="nav-link @ViewData["InterestActive"]">
+                        <i class="nav-icon fab fa-steam-square"></i>
+                        <p>
+                            İlgi Alanlarım
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/Admin/Testimonial/Index/" class="nav-link @ViewData["TestimonialActive"]">
+                        <i class="nav-icon far fa-comments"></i>
+                        <p>
+                            Yorumlarım
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/Admin/Resume/Index/" class="nav-link @ViewData["ResumeActive"]">
+                        <i class="nav-icon far fa-id-card"></i>
+                        <p>
+                            Özgeçmişim
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/Admin/Service/Index/" class="nav-link @ViewData["ServiceActive"]">
+                        <i class="nav-icon fas fa-laptop-code"></i>
+                        <p>
+                            Hizmetlerim
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/Admin/Portfolio/Index/" class="nav-link @ViewData["PortfolioActive"]">
+                        <i class="nav-icon fas fa-users"></i>
+                        <p>
+                            Referanslarım
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/Admin/Contact/Index/" class="nav-link @ViewData["ContactActive"]">
+                        <i class="nav-icon fas fa-city"></i>
+                        <p>
+                            İletişim
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/Admin/SocialMedia/Index/" class="nav-link @ViewData["SocialMediaActive"]">
+                        <i class="nav-icon fab fa-linkedin"></i>
+                        <p>
+                            Sosyal Medya Hesaplarım
+                        </p>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+</aside>

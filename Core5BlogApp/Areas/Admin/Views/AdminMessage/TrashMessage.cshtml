@@ -1,0 +1,116 @@
+﻿@using EntityLayer.Concrete
+@model List<WriterMessage>
+@{
+    ViewData["Title"] = "TrashMessage";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-3">
+            <a href="/Admin/AdminMessage/AddMessage/" class="btn btn-dark btn-block mb-3">Yeni Mesaj Gönder</a>
+
+            <!-- WriterMessageFolders row -->
+            @await Component.InvokeAsync("AdminMessageFolders")
+            <!-- /.WriterMessageFolders row -->
+            <!-- WriterMessageLabels row -->
+            @await Component.InvokeAsync("AdminMessageLabels")
+            <!-- /.WriterMessageLabels row -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-9">
+            <div class="card card-dark">
+                <div class="card-header">
+                    <h3 class="card-title">Çöp Kutusu</h3>
+                    <!-- /.card-tools -->
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body p-2">
+                    <table id="dttable" class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    #
+                                </th>
+                                <th>
+                                    Etiket
+                                </th>
+                                <th>
+                                    Ad - Soyad
+                                </th>
+                                <th>
+                                    Konu - İçerik
+                                </th>
+                                <th>
+                                    Tarih
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{ int i = 0; }
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @(++i)
+                                    </td>
+                                    <td class="mailbox-star">
+                                        @if (item.Label == "Important")
+                                        {
+                                            <i class="fas fa-circle text-danger"></i>
+                                        }
+                                        else if (item.Label == "Promotions")
+                                        {
+                                            <i class="fas fa-circle text-warning"></i>
+                                        }
+                                        else if (item.Label == "Social")
+                                        {
+                                            <i class="fas fa-circle text-primary"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="fas fa-circle text-dark"></i>
+                                        }
+                                    </td>
+                                    <td class="mailbox-name"><a href="/Admin/AdminMessage/MessageDetails/@item.Id">@item.ReceiverName</a></td>
+                                    <td class="mailbox-subject">
+                                        <b>@item.Subject</b> -
+                                        @{string metin = System.Text.RegularExpressions.Regex.Replace(item.MessageContent, @"<(.|\n)*?>", string.Empty); }
+                                        @Html.Raw(metin.Substring(0, metin.Length > 30 ? 30 : metin.Length))...
+                                    </td>
+                                    <td class="mailbox-date">@(((DateTime)item.Date).ToString("dd-MM-yyyy"))</td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>
+                                    #
+                                </th>
+                                <th>
+                                    Etiket
+                                </th>
+                                <th>
+                                    Ad - Soyad
+                                </th>
+                                <th>
+                                    Konu - İçerik
+                                </th>
+                                <th>
+                                    Tarih
+                                </th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <!-- /.table -->
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+<!-- /.content -->

@@ -1,0 +1,24 @@
+﻿@using EntityLayer.Concrete
+@model List<Skill>
+
+<div class="skills container">
+
+    <div class="section-title">
+        <h2>Yeteneklerim</h2>
+    </div>
+
+    <div class="row skills-content">
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-6">
+                <div class="progress">
+                    <span class="skill">@item.SkillName <i class="val">@item.SkillValue%</i></span>
+                    <div class="progress-bar-wrap">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="@item.SkillValue" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+</div>

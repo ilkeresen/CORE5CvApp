@@ -1,0 +1,17 @@
+﻿@using EntityLayer.Concrete
+@model List<AboutComponent>
+
+<div class="counts container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-3 col-md-6 mt-5">
+                <div class="count-box">
+                    <i class="@item.AboutComponentIcon"></i>
+                    <span data-purecounter-start="0" data-purecounter-end="@item.AboutComponentContent" data-purecounter-duration="1" class="purecounter"></span>
+                    <p>@item.AboutComponentText</p>
+                </div>
+            </div>
+        }
+    </div>
+</div>

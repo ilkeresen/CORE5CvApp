@@ -1,0 +1,34 @@
+﻿@using Core5BlogApp.Areas.Admin.Models
+@model IEnumerable<WriterMessageImageUrl>
+<!-- Messages Dropdown Menu -->
+<li class="nav-item dropdown">
+    <a class="nav-link" data-toggle="dropdown" href="#">
+        <i class="far fa-comments"></i>
+        <span class="badge badge-danger navbar-badge">3</span>
+    </a>
+    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+        @foreach (var item in Model)
+        {
+            <a href="/Admin/AdminMessage/MessageDetails/@item.Id" class="dropdown-item">
+                <!-- Message Start -->
+                <div class="media">
+                    <img src="~/userimage/@item.ImageUrl" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+                    <div class="media-body">
+                        <h3 class="dropdown-item-title">
+                            @item.SenderName
+                            <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
+                        </h3>
+                        <p class="text-sm">
+                            @{string metin = System.Text.RegularExpressions.Regex.Replace(item.MessageContent, @"<(.|\n)*?>", string.Empty); }
+                            @Html.Raw(metin.Substring(0, metin.Length > 15 ? 15 : metin.Length))...
+                        </p>
+                        <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> @(((DateTime)item.Date).ToString("dd-MM-yyyy"))</p>
+                    </div>
+                </div>
+                <!-- Message End -->
+            </a>
+            <div class="dropdown-divider"></div>
+        }
+        <a href="/Admin/AdminMessage/ReceiverMessage/" class="dropdown-item dropdown-footer">Tüm Mesajları Gör</a>
+    </div>
+</li>

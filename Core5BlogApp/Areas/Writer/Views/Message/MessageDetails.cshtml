@@ -1,0 +1,133 @@
+﻿@model EntityLayer.Concrete.WriterMessage
+@{
+    ViewData["Title"] = "MessageDetails";
+    Layout = "~/Areas/Writer/Views/Shared/_WriterLayout.cshtml";
+}
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-3">
+            <a href="/Writer/Message/AddMessage/" class="btn btn-dark btn-block mb-3">Yeni Mesaj Gönder</a>
+
+            <!-- WriterMessageFolders row -->
+            @await Component.InvokeAsync("WriterMessageFolders")
+            <!-- /.WriterMessageFolders row -->
+            <!-- WriterMessageLabels row -->
+            @await Component.InvokeAsync("WriterMessageLabels")
+            <!-- /.WriterMessageLabels row -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-9">
+            <div class="card card-dark">
+                <div class="card-header">
+                    <h3 class="card-title">Mesajı Oku</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body p-0">
+                    <div class="mailbox-read-info">
+                        <h5>Konu : <strong>@Model.Subject</strong></h5>
+                        <h6>
+                            Gönderen : <strong>@Model.Sender</strong>
+                            <span class="mailbox-read-time float-right">@(((DateTime)Model.Date).ToString("dd-MM-yyyy"))</span>
+                        </h6>
+                    </div>
+                    <!-- /.mailbox-read-info -->
+                    <div class="mailbox-controls with-border pl-2">
+                        <h6>
+                            Etiketler :
+                            @if (Model.Label == "Important")
+                            {
+                                <div class="icheck-danger d-inline">
+                                    <input type="radio" name="MessageLabel" checked="checked" value="Important" id="Important">
+                                    <label for="Important">
+                                        Önemli
+                                    </label>
+                                </div>
+                                <div class="icheck-warning d-inline ml-2">
+                                    <input type="radio" name="MessageLabel" disabled="disabled" value="Promotions" id="Promotions">
+                                    <label for="Promotions">
+                                        Promosyon
+                                    </label>
+                                </div>
+                                <div class="icheck-primary d-inline ml-2">
+                                    <input type="radio" name="MessageLabel" disabled="disabled" value="Social" id="Social">
+                                    <label for="Social">
+                                        Sosyal
+                                    </label>
+                                </div>
+                            }
+                            @if (Model.Label == "Promotions")
+                            {
+                                <div class="icheck-danger d-inline">
+                                    <input type="radio" name="MessageLabel" disabled="disabled" value="Important" id="Important">
+                                    <label for="Important">
+                                        Önemli
+                                    </label>
+                                </div>
+                                <div class="icheck-warning d-inline ml-2">
+                                    <input type="radio" name="MessageLabel" checked="checked" value="Promotions" id="Promotions">
+                                    <label for="Promotions">
+                                        Promosyon
+                                    </label>
+                                </div>
+                                <div class="icheck-primary d-inline ml-2">
+                                    <input type="radio" name="MessageLabel" disabled="disabled" value="Social" id="Social">
+                                    <label for="Social">
+                                        Sosyal
+                                    </label>
+                                </div>
+                            }
+                            @if (Model.Label == "Social")
+                            {
+                                <div class="icheck-danger d-inline">
+                                    <input type="radio" name="MessageLabel" disabled="disabled" value="Important" id="Important">
+                                    <label for="Important">
+                                        Önemli
+                                    </label>
+                                </div>
+                                <div class="icheck-warning d-inline ml-2">
+                                    <input type="radio" name="MessageLabel" disabled="disabled" value="Promotions" id="Promotions">
+                                    <label for="Promotions">
+                                        Promosyon
+                                    </label>
+                                </div>
+                                <div class="icheck-primary d-inline ml-2">
+                                    <input type="radio" name="MessageLabel" checked="checked" value="Social" id="Social">
+                                    <label for="Social">
+                                        Sosyal
+                                    </label>
+                                </div>
+                            }
+                        </h6>
+                    </div>
+                    <div class="mailbox-read-message">
+
+                        <p>
+                            @Html.Raw(Model.MessageContent)
+                        </p>
+                    </div>
+                    <!-- /.mailbox-read-message -->
+                </div>
+                <!-- /.card-body -->
+                <!-- /.card-footer -->
+                <div class="card-footer">
+                    @if (Model.Status == false)
+                    {
+                        <a href="/Writer/Message/DeleteMessage/@Model.Id" class="btn btn-default"><i class="far fa-trash-alt"></i> Çöp Kutusundan Sil</a>
+                        <a href="/Writer/Message/NotDeleteMessage/@Model.Id" class="btn btn-default"><i class="fas fa-times"></i> Silmekten Vazgeç</a>
+                    }
+                    else
+                    {
+                        <a href="/Writer/Message/MessageTrash/@Model.Id" class="btn btn-default"><i class="far fa-trash-alt"></i> Çöpe At</a>
+                    }
+                </div>
+                <!-- /.card-footer -->
+            </div>
+            <!-- /.card -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+<!-- /.content -->
